@@ -7,6 +7,8 @@
 
 import SwiftUI
 
+// https://useyourloaf.com/blog/swiftui-gauges/
+
 struct ContentView: View {
     var maxEngineRPM = 150.0
     var minEngineRPM = 0.0
