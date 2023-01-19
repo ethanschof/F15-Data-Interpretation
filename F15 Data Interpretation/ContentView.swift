@@ -12,8 +12,8 @@ import SwiftUI
 struct ContentView: View {
     var maxEngineRPM = 150.0
     var minEngineRPM = 0.0
-    @State private var currLeftEngineRPM = 75.0
-    @State private var currRightEngineRPM = 75.0
+    @State private var currLeftEngineRPM = 72.0
+    @State private var currRightEngineRPM = 115.0
     
     var minEngineTemp = 0.0
     var maxEngineTemp = 1200.0
