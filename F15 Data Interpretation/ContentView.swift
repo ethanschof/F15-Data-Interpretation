@@ -12,12 +12,12 @@ import SwiftUI
 struct ContentView: View {
     var maxEngineRPM = 150.0
     var minEngineRPM = 0.0
-    @State private var currLeftEngineRPM = 72.0
+    @State private var currLeftEngineRPM = 80.6
     @State private var currRightEngineRPM = 115.0
     
     var minEngineTemp = 0.0
     var maxEngineTemp = 1200.0
-    @State private var currLeftEngineTemp = 1000.0
+    @State private var currLeftEngineTemp = 1020.0
     @State private var currRightEngineTemp = 1100.0
     
     var minFuelFlow = 0.0
@@ -29,6 +29,10 @@ struct ContentView: View {
     var maxOilPSI = 100.0
     @State private var currLeftOilPSI = 14.0
     @State private var currRightOilPSI = 96.0
+    
+    var emptyFuel = 0.0
+    var fullFuel = 100.0
+    @State private var currFuelLevel = 68.0
     
     
     var body: some View {
@@ -120,11 +124,11 @@ struct ContentView: View {
                     .padding(.all, 40.0)
                     
                     // Engine Temperature Guage
-                    Gauge(value: currLeftEngineTemp, in: minEngineTemp...maxEngineTemp) {
+                    Gauge(value: currRightEngineTemp, in: minEngineTemp...maxEngineTemp) {
                       Text("Right Engine Temperature").fontWeight(.semibold)
                             .scaleEffect(1.2)
                     } currentValueLabel: {
-                        Text(currLeftEngineTemp.formatted())
+                        Text(currRightEngineTemp.formatted())
                             .fontWeight(.semibold)
                             .foregroundColor(Color.red)
                     } minimumValueLabel: {
@@ -169,9 +173,9 @@ struct ContentView: View {
                 .font(.title2)
                 .scaleEffect(1.5)
 
-            Gauge(value: currLeftEngineTemp, in: minEngineTemp...maxEngineTemp) {
+            Gauge(value: currFuelLevel, in: emptyFuel...fullFuel) {
             } currentValueLabel: {
-                Text(currLeftEngineTemp.formatted())
+                Text(currFuelLevel.formatted())
                     .fontWeight(.semibold)
                     .foregroundColor(Color.red)
             } minimumValueLabel: {
