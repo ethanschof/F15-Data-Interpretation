@@ -6,7 +6,15 @@
 //
 
 import Foundation
+import BinarySwift
 
 class FileInput {
+    let fileURL = Bundle.main.url(forResource: "myChap10", withExtension: "ch10")
+    let fileContents = try? String(contentsOf: fileURL! ?? <#default value#>)
+    
+    
+    
+//    let data = BinaryData(data: nsData, bigEndian: default)
+    //    let reader = BinaryDataReader(data)
     
 }

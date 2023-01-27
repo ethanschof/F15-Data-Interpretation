@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D820A1582984389100576E1C /* BinarySwift in Frameworks */ = {isa = PBXBuildFile; productRef = D820A1572984389100576E1C /* BinarySwift */; };
 		D845FC722979AB3C00C8FE7F /* F15_Data_InterpretationApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D845FC712979AB3C00C8FE7F /* F15_Data_InterpretationApp.swift */; };
 		D845FC742979AB3C00C8FE7F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D845FC732979AB3C00C8FE7F /* ContentView.swift */; };
 		D845FC762979AB3C00C8FE7F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D845FC752979AB3C00C8FE7F /* Assets.xcassets */; };
@@ -30,6 +31,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D820A1582984389100576E1C /* BinarySwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -89,6 +91,9 @@
 			dependencies = (
 			);
 			name = "F15 Data Interpretation";
+			packageProductDependencies = (
+				D820A1572984389100576E1C /* BinarySwift */,
+			);
 			productName = "F15 Data Interpretation";
 			productReference = D845FC6E2979AB3C00C8FE7F /* F15 Data Interpretation.app */;
 			productType = "com.apple.product-type.application";
@@ -117,6 +122,9 @@
 				Base,
 			);
 			mainGroup = D845FC652979AB3C00C8FE7F;
+			packageReferences = (
+				D820A1562984389100576E1C /* XCRemoteSwiftPackageReference "BinarySwift" */,
+			);
 			productRefGroup = D845FC6F2979AB3C00C8FE7F /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -345,6 +353,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		D820A1562984389100576E1C /* XCRemoteSwiftPackageReference "BinarySwift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Szaq/BinarySwift";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		D820A1572984389100576E1C /* BinarySwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D820A1562984389100576E1C /* XCRemoteSwiftPackageReference "BinarySwift" */;
+			productName = BinarySwift;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = D845FC662979AB3C00C8FE7F /* Project object */;
 }
