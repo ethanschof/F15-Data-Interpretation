@@ -6,15 +6,26 @@
 //
 
 import Foundation
-import BinarySwift
 
 class FileInput {
-    let fileURL = Bundle.main.url(forResource: "myChap10", withExtension: "ch10")
-    let fileContents = try? String(contentsOf: fileURL! ?? <#default value#>)
     
+    var filename: String = ""
+    var fd: Int32 = 0
+    var byteArray: [UInt8] = []
     
+    func FileInput(name: String) {
+        self.filename = name
+        self.fd = open(self.filename, O_RDONLY)
+        
+        if fd < 0 {
+            perror("could not open \(self.filename)")
+            parseBytes()
+            print("Data Read-In Complete")
+            close(fd)
+        }
+    }
     
-//    let data = BinaryData(data: nsData, bigEndian: default)
-    //    let reader = BinaryDataReader(data)
-    
+    func parseBytes() {
+        
+    }
 }
