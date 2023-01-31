@@ -25,7 +25,7 @@ class FileInput {
                 
                 print("savedText:", savedText)   // Should be nonsense
                 
-                byteArray = try String(contentsOf: fileURL, encoding: .ascii)
+                byteString = try String(contentsOf: fileURL, encoding: .ascii)
             }
         } catch {
             print("error:", error)

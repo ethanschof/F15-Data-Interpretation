@@ -10,6 +10,12 @@ import SwiftUI
 // https://useyourloaf.com/blog/swiftui-gauges/
 
 struct ContentView: View {
+    @State private var f = FileInput()
+    
+    func onClick(){
+        f.FileInput(name: "myChap10.ch10")
+    }
+    
     var maxEngineRPM = 150.0
     var minEngineRPM = 0.0
     @State private var currLeftEngineRPM = 80.6
@@ -184,6 +190,10 @@ struct ContentView: View {
               Text("F")
             }
             .padding(.all)
+            
+            Button(action: onClick){
+                Text("Run")
+            }
             
             
             
