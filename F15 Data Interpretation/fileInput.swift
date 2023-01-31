@@ -10,19 +10,27 @@ import Foundation
 class FileInput {
     
     var filename: String = "myChap10.ch10"
-    var fd: Int32 = 0
-    var byteArray: [UInt8] = []
+    var byteString: String = ""
     
     func FileInput(name: String) {
         self.filename = name
-        self.fd = open(self.filename, O_RDONLY)
-        
-        if fd < 0 {
-            perror("could not open \(self.filename)")
-            parseBytes()
-            print("Data Read-In Complete")
-            close(fd)
+        do {
+            // get the documents folder url
+            if let documentDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
+                // create the destination url for the text file to be saved
+                let fileURL = documentDirectory.appendingPathComponent(self.filename)
+
+                // reading from c10 file
+                let savedText = try String(contentsOf: fileURL, encoding: .ascii)
+                
+                print("savedText:", savedText)   // Should be nonsense
+                
+                byteArray = try String(contentsOf: fileURL, encoding: .ascii)
+            }
+        } catch {
+            print("error:", error)
         }
+        
     }
     
     func parseBytes() {
