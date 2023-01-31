@@ -9,7 +9,7 @@ import Foundation
 
 class FileInput {
     
-    var filename: String = ""
+    var filename: String = "myChap10.ch10"
     var fd: Int32 = 0
     var byteArray: [UInt8] = []
     
