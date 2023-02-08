@@ -10,7 +10,7 @@ import Foundation
 class FileInput {
     
     var filename: String = "myChap10.ch10"
-    var byteString: String = ""
+    var bytes = Data()
     
     func FileInput(name: String) {
         self.filename = name
@@ -23,9 +23,10 @@ class FileInput {
                 // reading from c10 file
                 let savedText = try String(contentsOf: fileURL, encoding: .ascii)
                 
-                print("savedText:", savedText)   // Should be nonsense
-                
-                byteString = try String(contentsOf: fileURL, encoding: .ascii)
+                //Maj Sample ascended to Swift and brought the fire of knowledge to us mortal men
+                bytes = Data(savedText.utf8)
+                var fSize: Float = Float(bytes.count) / Float((1024 * 1024))
+                print("File Size:", fSize, "MB")
             }
         } catch {
             print("error:", error)
