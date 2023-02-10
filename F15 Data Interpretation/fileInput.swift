@@ -28,15 +28,23 @@ class FileInput {
                 
                 //Maj Sample ascended to Swift and brought the fire of knowledge to us mortal men
                 bytes = Data(savedText.utf8)
-                var fSize: Float = Float(bytes.count) / Float((1024 * 1024))
-                print("File Size:", fSize, "MB")
+                // This first pull should give us 25 EB in hex,
+                // Our first byte is 37 in uint8 (which is correct, 25 hex is 37 in decimal) before its passed to the uint8 to 64 function
+                // However our second byte is 195 in uint8 which is NOT EB in hex. Then after going through the whole process it combines the 2 into one integer 286981.
+                
+                // In conclusion the UINT8 to UINT64 function is not working as intended,
+                // One of our assumpitons about the ASCII must be wrong as well as we are not getting the expected second byte
+                var packetSync = bitInterpreter(numBits: 16, swapEndian: false)
+                print(packetSync)
+//                var fSize: Float = Float(bytes.count) / Float((1024 * 1024))
+//                print("File Size:", fSize, "MB")
             }
         } catch {
             print("error:", error)
         }
         
     }
-    s
+    
     func bytesToUInt64(byteArray: [UInt8], length : Int) -> UInt64 {
         var total: UInt64 = 0
         var power = 0.0
