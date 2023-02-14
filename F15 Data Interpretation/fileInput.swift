@@ -31,35 +31,38 @@ class FileInput {
                 // Our first byte is 37 in uint8 (which is correct, 25 hex is 37 in decimal) before its passed to the uint8 to 64 function
                 // However our second byte is 195 in uint8 which is NOT EB in hex. Then after going through the whole process it combines the 2 into one integer 286981.
                 
-                // In conclusion the UINT8 to UINT64 function is not working as intended,
-                // One of our assumpitons about the ASCII must be wrong as well as we are not getting the expected second byte
-                var packetFound = false
-                var i = 0
-                while(!packetFound){
-                    if(bytes[i] == 37 && bytes[i+1] == 195){
-                        //packetFound = true
-                        print("packet found at: ", i)
-                    }
-                    i+=1
-                    if(i > bytes.count-1){
-                        print("error: end of file")
-                        packetFound = true
-                    }
-                }
-                
-                //packet header is mysteriously 0x25 C3 rather than when it was previously 0x25 EB
-                
                 let packetSync = bitInterpreter(numBits: 16, swapEndian: false)
                 print(packetSync)
-//                var fSize: Float = Float(bytes.count) / Float((1024 * 1024))
-//                print("File Size:", fSize, "MB")
+                
+                
             }
         } catch {
             print("error:", error)
         }
         
     }
-    
+    func fileInfo(){
+        var packetFound = false
+        var i = 0
+        var numPackets = 0
+        while(!packetFound){
+            if(bytes[i] == 37 && bytes[i+1] == 195){
+                //packetFound = true
+                //print("packet found at: ", i)
+                numPackets += 1
+            }
+            i+=1
+            if(i > bytes.count-1){
+                print("end of file")
+                packetFound = true
+            }
+        }
+        print("Approximate number of packets : ", numPackets)
+        
+        let fSize: Float = Float(bytes.count) / Float((1024 * 1024))
+        print("File Size:", fSize, "MB")
+        //packet header is mysteriously 0x25 C3 rather than when it was previously 0x25 EB
+    }
     func bytesToUInt64(byteArray: [UInt8], length : Int) -> UInt64 {
         var total: UInt64 = 0
         var power = 0.0
