@@ -25,7 +25,6 @@ class FileInput {
 
                 // reading from c10 file
                 let savedText = try String(contentsOf: fileURL, encoding: .ascii)
-                
                 //Maj Sample ascended to Swift and brought the fire of knowledge to us mortal men
                 bytes = Data(savedText.utf8)
                 // This first pull should give us 25 EB in hex,
@@ -34,7 +33,23 @@ class FileInput {
                 
                 // In conclusion the UINT8 to UINT64 function is not working as intended,
                 // One of our assumpitons about the ASCII must be wrong as well as we are not getting the expected second byte
-                var packetSync = bitInterpreter(numBits: 16, swapEndian: false)
+                var packetFound = false
+                var i = 0
+                while(!packetFound){
+                    if(bytes[i] == 37 && bytes[i+1] == 195){
+                        //packetFound = true
+                        print("packet found at: ", i)
+                    }
+                    i+=1
+                    if(i > bytes.count-1){
+                        print("error: end of file")
+                        packetFound = true
+                    }
+                }
+                
+                //packet header is mysteriously 0x25 C3 rather than when it was previously 0x25 EB
+                
+                let packetSync = bitInterpreter(numBits: 16, swapEndian: false)
                 print(packetSync)
 //                var fSize: Float = Float(bytes.count) / Float((1024 * 1024))
 //                print("File Size:", fSize, "MB")
@@ -50,8 +65,9 @@ class FileInput {
         var power = 0.0
         for byte in byteArray.reversed() {
             for i in (0...7){
-                var mask = UInt64(byte & 1 << i) * UInt64(pow(2, power))
-                total = UInt64(total + mask)
+                let mask = UInt64((byte >> i) & 1)
+                let cur = mask * UInt64(pow(2, power))
+                total = UInt64(total + cur)
                 power += 1
             }
         }
@@ -97,7 +113,7 @@ class FileInput {
             pulledBytes.reverse()
         }
         
-        var returnVal: UInt64 = bytesToUInt64(byteArray: pulledBytes, length: numBytes)
+        let returnVal: UInt64 = bytesToUInt64(byteArray: pulledBytes, length: numBytes)
         return returnVal
     }
     
