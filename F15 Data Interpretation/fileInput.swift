@@ -22,14 +22,12 @@ class FileInput {
             if let documentDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
                 // create the destination url for the text file to be saved
                 let fileURL = documentDirectory.appendingPathComponent(self.filename)
+                
+                bytes = try Data(contentsOf: fileURL)
 
-                // reading from c10 file
-                let savedText = try String(contentsOf: fileURL, encoding: .ascii)
-                //Maj Sample ascended to Swift and brought the fire of knowledge to us mortal men
-                bytes = Data(savedText.utf8)
-                // This first pull should give us 25 EB in hex,
-                // Our first byte is 37 in uint8 (which is correct, 25 hex is 37 in decimal) before its passed to the uint8 to 64 function
-                // However our second byte is 195 in uint8 which is NOT EB in hex. Then after going through the whole process it combines the 2 into one integer 286981.
+
+                fileInfo()
+                
                 
                 let packetSync = bitInterpreter(numBits: 16, swapEndian: false)
                 print(packetSync)
@@ -46,7 +44,7 @@ class FileInput {
         var i = 0
         var numPackets = 0
         while(!packetFound){
-            if(bytes[i] == 37 && bytes[i+1] == 195){
+            if(bytes[i] == 37 && bytes[i+1] == 235){
                 //packetFound = true
                 //print("packet found at: ", i)
                 numPackets += 1
