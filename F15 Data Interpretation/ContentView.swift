@@ -16,6 +16,10 @@ struct ContentView: View {
         f.FileInput(name: "myChap10.ch10")
     }
     
+    func parseOneHeader(){
+        f.parseHeader()
+    }
+    
     var maxEngineRPM = 150.0
     var minEngineRPM = 0.0
     @State private var currLeftEngineRPM = 80.6
@@ -192,10 +196,12 @@ struct ContentView: View {
             .padding(.all)
             
             Button(action: onClick){
-                Text("Run")
+                Text("Open File")
             }
             
-            
+            Button(action: parseOneHeader){
+                Text("Parse header")
+            }.padding(.all)
             
         } // End of Overall VStack
     } // End of Body
