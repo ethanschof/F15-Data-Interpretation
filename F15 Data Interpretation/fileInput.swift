@@ -222,6 +222,51 @@ class FileInput {
     }
     
     func parseCMDHeader(pktLen: UInt64) {
+        var messageCount = bitInterpreter(numBits: 24, swapEndian: false)
+        
+        var chanSpecData = bitInterpreter(numBits: 8, swapEndian: false)
+        
+        var messagesCompleted = 0
+        
+        while(messageCount < messagesCompleted){
+            var intraPacketTimeStamp = bitInterpreter(numBits: 64, swapEndian: false)
+            var blockStatusWord = bitInterpreter(numBits: 16, swapEndian: true)
+            var gapTimesWord = bitInterpreter(numBits: 16, swapEndian: true)
+            
+            var msgLen = bitInterpreter(numBits: 16, swapEndian: false)
+            
+            var commandWord = bitInterpreter(numBits: 16, swapEndian: true)
+            
+            var secondWord = bitInterpreter(numBits: 16, swapEndian: false)
+            
+            switch commandWord {
+            case 16437:
+                //command word 0x4035
+                
+            case 16469:
+                // command word 0x4055
+            case 16491:
+                // command word 0x406B
+            case 16528:
+                // command word 0x4090
+            case 16560:
+                // command word 0x40B0
+            case 16595:
+                // command word 0x40D3
+            case 16616:
+                // command word 0x40E8
+
+            default:
+                var bitsLeftinMsg = (msgLen*8) - 32
+                var msgData = bitInterpreter(numBits: bitsLeftinMsg, swapEndian: false)
+            }
+            
+            
+            
+            messagesCompleted += 1
+        }
         
     }
+    
+    
 }
