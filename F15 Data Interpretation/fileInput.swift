@@ -129,7 +129,7 @@ class FileInput {
         
         if(onlyBytes){
             while(numBytes != 0){
-                pulledBytes.append(bytes.removeFirst())
+                 pulledBytes.append(bytes.removeFirst())
                 numBytes -= 1
             }
         }else{
@@ -160,7 +160,7 @@ class FileInput {
     }
     
     func parseHeader() {
-        //while(bytes.count > 1){
+        while(bytes.count > 1){
             var pktSync = bitInterpreter(numBits: 16, swapEndian: false)
             var channelID = bitInterpreter(numBits: 16, swapEndian: true)
             var pktLength = bitInterpreter(numBits: 32, swapEndian: true)
@@ -168,27 +168,29 @@ class FileInput {
             var dataTypeVer = bitInterpreter(numBits: 8, swapEndian: true)
             var sequenceNum = bitInterpreter(numBits: 8, swapEndian: true)
             var pktFlags = bitInterpreter(numBits: 8, swapEndian: true)
-            var dataType = bitInterpreter(numBits: 8, swapEndian: true)
+            var dataType = bitInterpreter(numBits: 8, swapEndian: false)
             var relativeTimeCount = bitInterpreter(numBits: 48, swapEndian: true)
             var headerChecksum = bitInterpreter(numBits: 16, swapEndian: true)
             //overloaded version of bitInterpreter that returns an array of UInt8 rather than a UInt64
-            var packetData: [UInt8] = sliceByteArray(numBits: Int(dataLength)*8, swapEndian: false)
-            var pktChecksum = bitInterpreter(numBits: 16, swapEndian: true)
+            var packetData: [UInt8] = sliceByteArray(numBits: Int(pktLength*8 - 192), swapEndian: false)
             numPkts += 1
-            //print values
-            print("Packet Number: ", numPkts)
-            print("========================")
-            print("Sync: ", pktSync)
-            print("Channel ID: ", channelID)
-            print("Packet Length: ", pktLength)
-            print("Data Length: ", dataLength)
-            print("Data Type Version: ", dataTypeVer)
-            print("Sequence Number: ", sequenceNum)
-            print("Packet Flags: ", pktFlags)
-            print("Data Type: ", dataType)
-            print("Time Count: ", relativeTimeCount)
-            print("Header Checksum: ", headerChecksum)
-            print("========================\n")
-        //}
+            
+            if(dataType == 25){
+                //print values
+                print("1553 Packet Number: ", numPkts)
+                print("========================")
+                print("Sync: ", pktSync)
+                print("Channel ID: ", channelID)
+                print("Packet Length: ", pktLength)
+                print("Data Length: ", dataLength)
+                print("Data Type Version: ", dataTypeVer)
+                print("Sequence Number: ", sequenceNum)
+                print("Packet Flags: ", pktFlags)
+                print("Data Type: ", dataType)
+                print("Time Count: ", relativeTimeCount)
+                print("Header Checksum: ", headerChecksum)
+                print("========================\n")
+            }
+        }
     }
 }
