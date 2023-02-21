@@ -159,6 +159,7 @@ class FileInput {
         return pulledBytes
     }
     
+    //Parse Header
     func parseHeader() {
         while(bytes.count > 1){
             var pktSync = bitInterpreter(numBits: 16, swapEndian: false)
@@ -177,7 +178,7 @@ class FileInput {
             
             if(dataType == 25){
                 //print values
-                print("1553 Packet Number: ", numPkts)
+                /*print("1553 Packet Number: ", numPkts)
                 print("========================")
                 print("Sync: ", pktSync)
                 print("Channel ID: ", channelID)
@@ -189,8 +190,14 @@ class FileInput {
                 print("Data Type: ", dataType)
                 print("Time Count: ", relativeTimeCount)
                 print("Header Checksum: ", headerChecksum)
-                print("========================\n")
+                print("========================\n")*/
+                parseCMDHeader(message: packetData)
+                
             }
         }
+    }
+    
+    func parseCMDHeader(message: [UInt8]) {
+        
     }
 }
