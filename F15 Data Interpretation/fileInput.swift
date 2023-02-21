@@ -15,6 +15,8 @@ class FileInput {
     var curBitsRead = 0
     var numPkts = 0
     
+    
+    //reads in file into byte array
     func FileInput(name: String) {
         self.filename = name
         do {
@@ -34,6 +36,7 @@ class FileInput {
         
     }
     
+    //displays information about the read-in data
     func fileInfo(){
         var packetFound = false
         var i = 0
@@ -56,6 +59,7 @@ class FileInput {
         print("File Size:", fSize, "MB")
     }
     
+    //converts byte array into UInt64
     func bytesToUInt64(byteArray: [UInt8], length : Int) -> UInt64 {
         var total: UInt64 = 0
         var power = 0.0
@@ -159,7 +163,10 @@ class FileInput {
         return pulledBytes
     }
     
-    //Parse Header
+    /**
+        Parse Header
+        Uses the class variable bytes to interpret each of the packet headers and call 1553 packets to be interpretted further
+     **/
     func parseHeader() {
         while(bytes.count > 1){
             var pktSync = bitInterpreter(numBits: 16, swapEndian: false)
@@ -172,32 +179,33 @@ class FileInput {
             var dataType = bitInterpreter(numBits: 8, swapEndian: false)
             var relativeTimeCount = bitInterpreter(numBits: 48, swapEndian: true)
             var headerChecksum = bitInterpreter(numBits: 16, swapEndian: true)
-            //overloaded version of bitInterpreter that returns an array of UInt8 rather than a UInt64
-            var packetData: [UInt8] = sliceByteArray(numBits: Int(pktLength*8 - 192), swapEndian: false)
             numPkts += 1
             
             if(dataType == 25){
-                //print values
-                /*print("1553 Packet Number: ", numPkts)
-                print("========================")
-                print("Sync: ", pktSync)
-                print("Channel ID: ", channelID)
-                print("Packet Length: ", pktLength)
-                print("Data Length: ", dataLength)
-                print("Data Type Version: ", dataTypeVer)
-                print("Sequence Number: ", sequenceNum)
-                print("Packet Flags: ", pktFlags)
-                print("Data Type: ", dataType)
-                print("Time Count: ", relativeTimeCount)
-                print("Header Checksum: ", headerChecksum)
-                print("========================\n")*/
-                parseCMDHeader(message: packetData)
-                
+                parseCMDHeader(pktLen: pktLength)
+            }else{
+                //overloaded version of bitInterpreter that returns an array of UInt8 rather than a UInt64
+                //ignore non-1553 message data
+                var packetData: [UInt8] = sliceByteArray(numBits: Int(pktLength*8 - 192), swapEndian: false)
             }
+            //print values
+            /*print("1553 Packet Number: ", numPkts)
+            print("========================")
+            print("Sync: ", pktSync)
+            print("Channel ID: ", channelID)
+            print("Packet Length: ", pktLength)
+            print("Data Length: ", dataLength)
+            print("Data Type Version: ", dataTypeVer)
+            print("Sequence Number: ", sequenceNum)
+            print("Packet Flags: ", pktFlags)
+            print("Data Type: ", dataType)
+            print("Time Count: ", relativeTimeCount)
+            print("Header Checksum: ", headerChecksum)
+            print("========================\n")*/
         }
     }
     
-    func parseCMDHeader(message: [UInt8]) {
+    func parseCMDHeader(pktLen: UInt64) {
         
     }
 }
