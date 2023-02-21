@@ -26,7 +26,7 @@ class FileInput {
                 bytes = try Data(contentsOf: fileURL)
 
                 fileInfo()
-                
+                //parseHeader()
             }
         } catch {
             print("error:", error)
@@ -97,6 +97,8 @@ class FileInput {
             pulledBytes.append(bytes.first!)
             pulledBytes[pulledBytes.lastIndex(of: pulledBytes.last!)!] = pulledBytes.last! >> (8 - numBits%8)
             
+            curBitsRead = (curBitsRead + numBits % 8)%8
+            
             if((curBitsRead + numBits%8)%8 == 0){
                 bytes.removeFirst()
             }else{
@@ -162,16 +164,16 @@ class FileInput {
         //while(bytes.count > 1){
             var pktSync = bitInterpreter(numBits: 16, swapEndian: false)
             var channelID = bitInterpreter(numBits: 16, swapEndian: false)
-            var pktLength = bitInterpreter(numBits: 32, swapEndian: false)
-            var dataLength = bitInterpreter(numBits: 32, swapEndian: false)
+            var pktLength = bitInterpreter(numBits: 32, swapEndian: true)
+            var dataLength = bitInterpreter(numBits: 32, swapEndian: true)
             var dataTypeVer = bitInterpreter(numBits: 8, swapEndian: false)
             var sequenceNum = bitInterpreter(numBits: 8, swapEndian: false)
             var pktFlags = bitInterpreter(numBits: 8, swapEndian: false)
             var dataType = bitInterpreter(numBits: 8, swapEndian: false)
-            var relativeTimeCount = bitInterpreter(numBits: 48, swapEndian: false)
+            var relativeTimeCount = bitInterpreter(numBits: 48, swapEndian: true)
             var headerChecksum = bitInterpreter(numBits: 16, swapEndian: false)
             //overloaded version of bitInterpreter that returns an array of UInt8 rather than a UInt64
-            var packetData: [UInt8] = sliceByteArray(numBits: Int(pktLength), swapEndian: false)
+            var packetData: [UInt8] = sliceByteArray(numBits: Int(dataLength), swapEndian: false)
             var pktChecksum = bitInterpreter(numBits: 16, swapEndian: false)
             numPkts += 1
             //print values
@@ -187,6 +189,7 @@ class FileInput {
             print("Data Type: ", dataType)
             print("Time Count: ", relativeTimeCount)
             print("Header Checksum: ", headerChecksum)
+            print("TEST FOR NEXT SYNC: ", bitInterpreter(numBits: 16, swapEndian: false))
             print("========================")
         //}
     }

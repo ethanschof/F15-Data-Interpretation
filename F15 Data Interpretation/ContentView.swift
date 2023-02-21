@@ -8,9 +8,9 @@
 import SwiftUI
 
 // https://useyourloaf.com/blog/swiftui-gauges/
+var f = FileInput()
 
 struct ContentView: View {
-    @State private var f = FileInput()
     
     func onClick(){
         f.FileInput(name: "myChap10.ch10")
