@@ -14,35 +14,40 @@ struct ContentView: View {
     
     func onClick(){
         f.FileInput(name: "myChap10.ch10")
+        
     }
     
     func parseOneHeader(){
         f.parseHeader()
     }
     
+    func UpdateValues(){
+        currFuelLevel = f.currFuelLevel
+    }
+    
     var maxEngineRPM = 150.0
     var minEngineRPM = 0.0
-    @State private var currLeftEngineRPM = 80.6
-    @State private var currRightEngineRPM = 115.0
+    @State private var currLeftEngineRPM = f.currLeftEngineRPM
+    @State private var currRightEngineRPM = f.currRightEngineRPM
     
     var minEngineTemp = 0.0
     var maxEngineTemp = 1200.0
-    @State private var currLeftEngineTemp = 1020.0
-    @State private var currRightEngineTemp = 1100.0
+    @State private var currLeftEngineTemp = f.currLeftEngineTemp
+    @State private var currRightEngineTemp = f.currRightEngineTemp
     
     var minFuelFlow = 0.0
     var maxFuelFlow = 60000.0
-    @State private var currLeftFuelFlow = 5342.3
-    @State private var currRightFuelFlow = 57842.1
+    @State private var currLeftFuelFlow = f.currLeftFuelFlow
+    @State private var currRightFuelFlow = f.currRightFuelFlow
     
     var minOilPSI = 1.0
     var maxOilPSI = 100.0
-    @State private var currLeftOilPSI = 14.0
-    @State private var currRightOilPSI = 96.0
+    @State private var currLeftOilPSI = f.currLeftOilPSI
+    @State private var currRightOilPSI = f.currRightOilPSI
     
     var emptyFuel = 0.0
     var fullFuel = 100.0
-    @State private var currFuelLevel = 68.0
+    @State private var currFuelLevel = f.currFuelLevel
     
     
     var body: some View {

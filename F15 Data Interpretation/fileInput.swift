@@ -15,6 +15,21 @@ class FileInput {
     var curBitsRead = 0
     var numPkts = 0
     
+    //Front-end display data
+    var currLeftEngineRPM = 0.0
+    var currRightEngineRPM = 0.0
+    
+    var currLeftEngineTemp = 0.0
+    var currRightEngineTemp = 0.0
+    
+    var currLeftFuelFlow = 0.0
+    var currRightFuelFlow = 0.0
+    
+    var currLeftOilPSI = 0.0
+    var currRightOilPSI = 0.0
+    
+    var currFuelLevel = 0.0
+    
     
     //reads in file into byte array
     func FileInput(name: String) {
@@ -29,6 +44,7 @@ class FileInput {
 
                 fileInfo()
                 //parseHeader()
+                currFuelLevel = 60
             }
         } catch {
             print("error:", error)
