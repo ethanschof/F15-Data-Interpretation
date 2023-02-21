@@ -13,7 +13,7 @@ class FileInput {
     var bytes = Data()
     
     var curBitsRead = 0
-    
+    var numPkts = 0
     
     func FileInput(name: String) {
         self.filename = name
@@ -160,21 +160,20 @@ class FileInput {
     }
     
     func parseHeader() {
-        var numPkts = 0
         //while(bytes.count > 1){
             var pktSync = bitInterpreter(numBits: 16, swapEndian: false)
-            var channelID = bitInterpreter(numBits: 16, swapEndian: false)
+            var channelID = bitInterpreter(numBits: 16, swapEndian: true)
             var pktLength = bitInterpreter(numBits: 32, swapEndian: true)
             var dataLength = bitInterpreter(numBits: 32, swapEndian: true)
-            var dataTypeVer = bitInterpreter(numBits: 8, swapEndian: false)
-            var sequenceNum = bitInterpreter(numBits: 8, swapEndian: false)
-            var pktFlags = bitInterpreter(numBits: 8, swapEndian: false)
-            var dataType = bitInterpreter(numBits: 8, swapEndian: false)
+            var dataTypeVer = bitInterpreter(numBits: 8, swapEndian: true)
+            var sequenceNum = bitInterpreter(numBits: 8, swapEndian: true)
+            var pktFlags = bitInterpreter(numBits: 8, swapEndian: true)
+            var dataType = bitInterpreter(numBits: 8, swapEndian: true)
             var relativeTimeCount = bitInterpreter(numBits: 48, swapEndian: true)
-            var headerChecksum = bitInterpreter(numBits: 16, swapEndian: false)
+            var headerChecksum = bitInterpreter(numBits: 16, swapEndian: true)
             //overloaded version of bitInterpreter that returns an array of UInt8 rather than a UInt64
-            var packetData: [UInt8] = sliceByteArray(numBits: Int(dataLength), swapEndian: false)
-            var pktChecksum = bitInterpreter(numBits: 16, swapEndian: false)
+            var packetData: [UInt8] = sliceByteArray(numBits: Int(dataLength)*8, swapEndian: false)
+            var pktChecksum = bitInterpreter(numBits: 16, swapEndian: true)
             numPkts += 1
             //print values
             print("Packet Number: ", numPkts)
@@ -189,8 +188,7 @@ class FileInput {
             print("Data Type: ", dataType)
             print("Time Count: ", relativeTimeCount)
             print("Header Checksum: ", headerChecksum)
-            print("TEST FOR NEXT SYNC: ", bitInterpreter(numBits: 16, swapEndian: false))
-            print("========================")
+            print("========================\n")
         //}
     }
 }
