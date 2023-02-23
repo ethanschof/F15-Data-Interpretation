@@ -205,7 +205,7 @@ class FileInput {
                 var packetData: [UInt8] = sliceByteArray(numBits: Int(pktLength*8 - 192), swapEndian: false)
             }
             //print values
-            /*print("1553 Packet Number: ", numPkts)
+            print("1553 Packet Number: ", numPkts)
             print("========================")
             print("Sync: ", pktSync)
             print("Channel ID: ", channelID)
@@ -217,7 +217,7 @@ class FileInput {
             print("Data Type: ", dataType)
             print("Time Count: ", relativeTimeCount)
             print("Header Checksum: ", headerChecksum)
-            print("========================\n")*/
+            print("========================\n")
         }
     }
     
@@ -242,23 +242,30 @@ class FileInput {
             switch commandWord {
             case 16437:
                 //command word 0x4035
-                
+                print("CMD 16437")
             case 16469:
                 // command word 0x4055
+                print("CMD 16469")
             case 16491:
                 // command word 0x406B
+                print("CMD 16491")
             case 16528:
                 // command word 0x4090
+                print("CMD 16528")
             case 16560:
                 // command word 0x40B0
+                print("CMD 16560")
             case 16595:
                 // command word 0x40D3
+                print("CMD 16595")
             case 16616:
                 // command word 0x40E8
+                print("CMD 16616")
 
             default:
+                print("ERROR: Unknown CMD Word")
                 var bitsLeftinMsg = (msgLen*8) - 32
-                var msgData = bitInterpreter(numBits: bitsLeftinMsg, swapEndian: false)
+                var msgData = bitInterpreter(numBits: Int(bitsLeftinMsg), swapEndian: false)
             }
             
             
