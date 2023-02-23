@@ -30,6 +30,29 @@ class FileInput {
     
     var currFuelLevel = 0.0
     
+    // 4035 cmd wrd attributes
+    var trueAirspeed = 0.0
+    var aoa = 0.0
+    var machNum = 0.0
+    var pitchAngle = 0.0
+    var rollAngle = 0.0
+    var rollRate = 0.0
+    var pitchRate = 0.0
+    var yawRate = 0.0
+    var rollAccel = 0.0
+    var pitchAccel = 0.0
+    var yawAccel = 0.0
+    var longitudinalAccel = 0.0
+    var lateralAccel = 0.0
+    var rollRateAFCS = 0.0
+    var lateralStickForce = 0.0
+    var longitudinalStickForce = 0.0
+    var rightStabilatorDeflection = 0.0
+    var leftStabilatorDeflection = 0.0
+    var normalAccel = 0.0
+    var sideslipAngle = 0.0
+    var dynamicPressure = 0.0
+    
     
     //reads in file into byte array
     func FileInput(name: String) {
@@ -256,10 +279,13 @@ class FileInput {
             
             var secondWord = bitInterpreter(numBits: 16, swapEndian: false)
             
+            var bitsLeftinMsg = (msgLen*8) - 32
+            
             switch commandWord {
             case 16437:
                 //command word 0x4035
                 print("CMD 16437")
+                cmd4035(bitsLeft: Int(bitsLeftinMsg))
             case 16469:
                 // command word 0x4055
                 print("CMD 16469")
@@ -281,13 +307,85 @@ class FileInput {
 
             default:
                 print("ERROR: Unknown CMD Word")
-                var bitsLeftinMsg = (msgLen*8) - 32
+                
                 var msgData = bitInterpreter(numBits: Int(bitsLeftinMsg), swapEndian: false)
             }
             
             
             
             messagesCompleted += 1
+        }
+        
+    }
+    
+    func cmd4035(bitsLeft: Int){
+        var totalWordsInThisCmdWord = 21
+        var bitsInCommandWord = totalWordsInThisCmdWord*16
+        
+        var temptrueAirspeed = bitInterpreter(numBits: 15, swapEndian: false)
+        var valid = bitInterpreter(numBits: 1, swapEndian: false)
+        
+        if (valid == 1){
+            trueAirspeed = temptrueAirspeed
+        }
+        
+        var tempaoa = bitInterpreter(numBits: 15, swapEndian: false)
+        valid = bitInterpreter(numBits: 1, swapEndian: false)
+        
+        if (valid == 1){
+            aoa = tempaoa
+        }
+        
+        var tempmacNum = bitInterpreter(numBits: 15, swapEndian: false)
+        valid = bitInterpreter(numBits: 1, swapEndian: false)
+        
+        if (valid == 1){
+            machNum = tempmachNum
+        }
+                
+        pitchAngle = bitInterpreter(numBits: 16, swapEndian: false)
+        
+        rollAngle = bitInterpreter(numBits: 16, swapEndian: false)
+        
+        rollRate  = bitInterpreter(numBits: 16, swapEndian: false)
+        
+        pitchRate = bitInterpreter(numBits: 16, swapEndian: false)
+        
+        yawRate = bitInterpreter(numBits: 16, swapEndian: false)
+        
+        rollAccel = bitInterpreter(numBits: 14, swapEndian: false)
+        
+        var spare = bitInterpreter(numBits: 2, swapEndian: false)
+        
+        pitchAccel = bitInterpreter(numBits: 12, swapEndian: false)
+        spare = bitInterpreter(numBits: 4, swapEndian: false)
+        
+        yawAccel = bitInterpreter(numBits: 12, swapEndian: false)
+        spare = bitInterpreter(numBits: 4, swapEndian: false)
+        
+        longitudinalAccel = bitInterpreter(numBits: 16, swapEndian: false)
+        
+        lateralAccel = bitInterpreter(numBits: 16, swapEndian: false)
+        rollRateAFCS = bitInterpreter(numBits: 16, swapEndian: false)
+        lateralStickForce = bitInterpreter(numBits: 16, swapEndian: false)
+        longitudinalStickForce = bitInterpreter(numBits: 16, swapEndian: false)
+        rightStabilatorDeflection = bitInterpreter(numBits: 16, swapEndian: false)
+        leftStabilatorDeflection = bitInterpreter(numBits: 16, swapEndian: false)
+        normalAccel = bitInterpreter(numBits: 16, swapEndian: false)
+        
+        tempsideslipAngle = bitInterpreter(numBits: 15, swapEndian: false)
+        valid = bitInterpreter(numBits: 1, swapEndian: false)
+        if (valid == 1){
+            sideslipAngle = tempsideslipAngle
+        }
+        
+        dynamicPressure = bitInterpreter(numBits: 16, swapEndian: false)
+        
+        if (bitsInCommandWord < bitsLeft){
+            var difference = bitsLeft - bitsInCommandWord
+            var junk = bitInterpreter(numBits: difference, swapEndian: false)
+        } else if (bitsInCommandWord > bitsLeft) {
+            print("there are more bits in the command word than were left in the message, something is wrong :(")
         }
         
     }
