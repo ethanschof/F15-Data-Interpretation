@@ -73,13 +73,6 @@ class FileInput {
             print("error:", error)
         }
         
-        //print(bitInterpreter(numBits: 3, swapEndian: false))
-        //print(bitInterpreter(numBits: 4, swapEndian: false))
-        //print(bitInterpreter(numBits: 1, swapEndian: false))
-        
-        print(bitInterpreter(numBits: 15, swapEndian: false))
-        print(bitInterpreter(numBits: 1, swapEndian: false))
-        
         
     }
     
