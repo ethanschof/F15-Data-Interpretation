@@ -114,6 +114,7 @@ class FileInput {
             print("error:", error)
         }
         
+        
     }
     
     //displays information about the read-in data
@@ -158,7 +159,10 @@ class FileInput {
     func bitInterpreter(numBits : Int, swapEndian : Bool) -> UInt64{
         var numBytes = numBits / 8
         var onlyBytes = true
-        if(numBits % 8 != 0){
+        
+        var bitsMod8 = numBits%8
+        
+        if(bitsMod8 != 0){
             numBytes += 1
             onlyBytes = false
         }
@@ -166,28 +170,34 @@ class FileInput {
         var pulledBytes = [UInt8]()
         
         if(onlyBytes){
-            while(numBytes != 0){
+            var i = numBytes
+            while(i != 0){
                 pulledBytes.append(bytes.removeFirst())
-                numBytes -= 1
+                i -= 1
             }
         }else{
-            
-            while(numBytes != 1){
+            var i = numBytes
+            while(i != 1){
                 pulledBytes.append(bytes.removeFirst())
-                numBytes -= 1
+                i -= 1
             }
             
             //remove unwanted bits
             pulledBytes.append(bytes.first!)
-            pulledBytes[pulledBytes.lastIndex(of: pulledBytes.last!)!] = pulledBytes.last! >> (8 - numBits%8)
+            pulledBytes[pulledBytes.lastIndex(of: pulledBytes.last!)!] = pulledBytes.last! >> (8 - bitsMod8)
             
-            curBitsRead = (curBitsRead + numBits % 8)%8
-            
-            if((curBitsRead + numBits%8)%8 == 0){
+            if((curBitsRead + bitsMod8)%8 == 0){
                 bytes.removeFirst()
             }else{
                 //remove requested bits off the byte function
-                bytes[bytes.firstIndex(of: pulledBytes.first!)!] = pulledBytes.first! << (numBits%8)
+                bytes[bytes.startIndex] = bytes[bytes.startIndex] << (bitsMod8)
+            }
+            curBitsRead = (curBitsRead + bitsMod8)%8
+            
+            if(numBytes == 2){
+                var a = pulledBytes[0] << (bitsMod8)
+                pulledBytes[1] = pulledBytes[1] | a
+                pulledBytes[0] = pulledBytes[0] >> (8-bitsMod8)
             }
         }
         
