@@ -54,6 +54,47 @@ class FileInput {
     var dynamicPressure = 0.0
     
     
+    // 406B cmd wrd attributes
+    var casPitchCaution = false
+    var casRollCaution = false
+    var casYawCaution = false
+    var leftBleedAirCaution = false
+    var rightBleedAirCaution = false
+    var attitudeCaution = false
+    
+    var pitchRatioCaution = false
+    var rollRatioCaution = false
+    var emergencyBoostOnCaution = false
+    var leftEngineControllerCaution = false
+    var rightEngineControllerCaution = false
+    var boostSystemMalfunctionCaution = false
+    var hydraulicPressureUTILACaution = false
+    
+    var hydraulicPressurePC1ACaution = false
+    var hydraulicPressurePC2Caution = false
+    var hydraulicPressureUTILBCaution = false
+    var hydraulicPressurePC1BCaution = false
+    var hydraulicPressurePC2BCaution = false
+    
+    var tfrSetClearanceStatus = 0.0
+    
+    var pressureRatio = 0.0
+    var baroCorrectedPressureAltitude = 0.0
+    var trueHeading = 0.0
+    var verticalVelocity = 0.0
+    var landingGearHandleUp = false
+    var manualTFConnect = false
+    var autoTFConnect = false
+    var tfBitInhibited = false
+    var modeAFlyUp = false
+    var modeBFlyUp = false
+    var lowAltitudeMonitorFailed = false
+    var afcsDetectedTFFailed = false
+    var aftControlStickOverrideIndicated = false
+    var highLowAirspeedIndicatorFlashed = false
+    
+    
+    
     //reads in file into byte array
     func FileInput(name: String) {
         self.filename = name
@@ -275,6 +316,8 @@ class FileInput {
             case 16491:
                 // command word 0x406B
                 print("CMD 16491")
+                cmd406b(bitsLeft: Int(bitsLeftinMsg))
+                
             case 16528:
                 // command word 0x4090
                 print("CMD 16528")
@@ -309,60 +352,60 @@ class FileInput {
         var valid = bitInterpreter(numBits: 1, swapEndian: false)
         
         if (valid == 1){
-            trueAirspeed = temptrueAirspeed
+            trueAirspeed = Double(temptrueAirspeed)
         }
         
         var tempaoa = bitInterpreter(numBits: 15, swapEndian: false)
         valid = bitInterpreter(numBits: 1, swapEndian: false)
         
         if (valid == 1){
-            aoa = tempaoa
+            aoa = Double(tempaoa)
         }
         
-        var tempmacNum = bitInterpreter(numBits: 15, swapEndian: false)
+        var tempmachNum = bitInterpreter(numBits: 15, swapEndian: false)
         valid = bitInterpreter(numBits: 1, swapEndian: false)
         
         if (valid == 1){
-            machNum = tempmachNum
+            machNum = Double(tempmachNum)
         }
                 
-        pitchAngle = bitInterpreter(numBits: 16, swapEndian: false)
+        pitchAngle = Double(bitInterpreter(numBits: 16, swapEndian: false))
         
-        rollAngle = bitInterpreter(numBits: 16, swapEndian: false)
+        rollAngle = Double(bitInterpreter(numBits: 16, swapEndian: false))
         
-        rollRate  = bitInterpreter(numBits: 16, swapEndian: false)
+        rollRate  = Double(bitInterpreter(numBits: 16, swapEndian: false))
         
-        pitchRate = bitInterpreter(numBits: 16, swapEndian: false)
+        pitchRate = Double(bitInterpreter(numBits: 16, swapEndian: false))
         
-        yawRate = bitInterpreter(numBits: 16, swapEndian: false)
+        yawRate = Double(bitInterpreter(numBits: 16, swapEndian: false))
         
-        rollAccel = bitInterpreter(numBits: 14, swapEndian: false)
+        rollAccel = Double(bitInterpreter(numBits: 14, swapEndian: false))
         
         var spare = bitInterpreter(numBits: 2, swapEndian: false)
         
-        pitchAccel = bitInterpreter(numBits: 12, swapEndian: false)
+        pitchAccel = Double(bitInterpreter(numBits: 12, swapEndian: false))
         spare = bitInterpreter(numBits: 4, swapEndian: false)
         
-        yawAccel = bitInterpreter(numBits: 12, swapEndian: false)
+        yawAccel = Double(bitInterpreter(numBits: 12, swapEndian: false))
         spare = bitInterpreter(numBits: 4, swapEndian: false)
         
-        longitudinalAccel = bitInterpreter(numBits: 16, swapEndian: false)
+        longitudinalAccel = Double(bitInterpreter(numBits: 16, swapEndian: false))
         
-        lateralAccel = bitInterpreter(numBits: 16, swapEndian: false)
-        rollRateAFCS = bitInterpreter(numBits: 16, swapEndian: false)
-        lateralStickForce = bitInterpreter(numBits: 16, swapEndian: false)
-        longitudinalStickForce = bitInterpreter(numBits: 16, swapEndian: false)
-        rightStabilatorDeflection = bitInterpreter(numBits: 16, swapEndian: false)
-        leftStabilatorDeflection = bitInterpreter(numBits: 16, swapEndian: false)
-        normalAccel = bitInterpreter(numBits: 16, swapEndian: false)
+        lateralAccel = Double(bitInterpreter(numBits: 16, swapEndian: false))
+        rollRateAFCS = Double(bitInterpreter(numBits: 16, swapEndian: false))
+        lateralStickForce = Double(bitInterpreter(numBits: 16, swapEndian: false))
+        longitudinalStickForce = Double(bitInterpreter(numBits: 16, swapEndian: false))
+        rightStabilatorDeflection = Double(bitInterpreter(numBits: 16, swapEndian: false))
+        leftStabilatorDeflection = Double(bitInterpreter(numBits: 16, swapEndian: false))
+        normalAccel = Double(bitInterpreter(numBits: 16, swapEndian: false))
         
-        tempsideslipAngle = bitInterpreter(numBits: 15, swapEndian: false)
+        var tempsideslipAngle = Double(bitInterpreter(numBits: 15, swapEndian: false))
         valid = bitInterpreter(numBits: 1, swapEndian: false)
         if (valid == 1){
-            sideslipAngle = tempsideslipAngle
+            sideslipAngle = Double(tempsideslipAngle)
         }
         
-        dynamicPressure = bitInterpreter(numBits: 16, swapEndian: false)
+        dynamicPressure = Double(bitInterpreter(numBits: 16, swapEndian: false))
         
         if (bitsInCommandWord < bitsLeft){
             var difference = bitsLeft - bitsInCommandWord
@@ -373,5 +416,203 @@ class FileInput {
         
     }
     
+    
+    func cmd406b(bitsLeft: Int){
+        var totalWordsInThisCmdWord = 11
+        // multiply by 16 because all the words are 16 bits in this cmdwrd
+        var bitsInCommandWord = totalWordsInThisCmdWord*16
+        
+        var trash = bitInterpreter(numBits: 1, swapEndian: false)
+        var bit = bitInterpreter(numBits: 1, swapEndian: false)
+        if (bit == 1){
+            casPitchCaution = true
+        }
+        
+        bit = bitInterpreter(numBits: 1, swapEndian: false)
+        if (bit == 1){
+            casRollCaution = true
+        }
+        
+        bit = bitInterpreter(numBits: 1, swapEndian: false)
+        if (bit == 1){
+            casYawCaution = true
+        }
+        trash = bitInterpreter(numBits: 3, swapEndian: false)
+        trash = bitInterpreter(numBits: 4, swapEndian: false)
+        
+        bit = bitInterpreter(numBits: 1, swapEndian: false)
+        if (bit == 1){
+            leftBleedAirCaution = true
+        }
+        
+        bit = bitInterpreter(numBits: 1, swapEndian: false)
+        if (bit == 1){
+            rightBleedAirCaution = true
+            
+        }
+        trash = bitInterpreter(numBits: 1, swapEndian: false)
+        
+        bit = bitInterpreter(numBits: 1, swapEndian: false)
+        if (bit == 1){
+            attitudeCaution = true
+        }
+        
+        
+        bit = bitInterpreter(numBits: 1, swapEndian: false)
+        if (bit == 1){
+            pitchRatioCaution = true
+            
+        }
+        
+        trash = bitInterpreter(numBits: 4, swapEndian: false)
+        
+        bit = bitInterpreter(numBits: 1, swapEndian: false)
+        if (bit == 1){
+            rollRatioCaution = true
+        }
+        
+        bit = bitInterpreter(numBits: 1, swapEndian: false)
+        if (bit == 1){
+            emergencyBoostOnCaution = true
+        }
+        
+        trash = bitInterpreter(numBits: 5, swapEndian: false)
+        
+        bit = bitInterpreter(numBits: 1, swapEndian: false)
+        if (bit == 1){
+            leftEngineControllerCaution = true
+        }
+        
+        bit = bitInterpreter(numBits: 1, swapEndian: false)
+        if (bit == 1){
+            rightEngineControllerCaution = true
+        }
+        
+        bit = bitInterpreter(numBits: 1, swapEndian: false)
+        if (bit == 1){
+            boostSystemMalfunctionCaution = true
+        }
+        
+        bit = bitInterpreter(numBits: 1, swapEndian: false)
+        if (bit == 1){
+            hydraulicPressureUTILACaution = true
+        }
+        
+        bit = bitInterpreter(numBits: 1, swapEndian: false)
+        if (bit == 1){
+            hydraulicPressurePC1ACaution = true
+        }
+        
+        bit = bitInterpreter(numBits: 1, swapEndian: false)
+        if (bit == 1){
+            hydraulicPressurePC2Caution = true
+        }
+        
+        bit = bitInterpreter(numBits: 1, swapEndian: false)
+        if (bit == 1){
+            hydraulicPressureUTILBCaution = true
+        }
+        
+        bit = bitInterpreter(numBits: 1, swapEndian: false)
+        if (bit == 1){
+            hydraulicPressurePC1BCaution = true
+        }
+        
+        bit = bitInterpreter(numBits: 1, swapEndian: false)
+        if (bit == 1){
+            hydraulicPressurePC2BCaution = true
+        }
+        
+        trash = bitInterpreter(numBits: 1, swapEndian: false)
+        trash = bitInterpreter(numBits: 8, swapEndian: false)
+        
+        trash = bitInterpreter(numBits: 6, swapEndian: false)
+        
+        tfrSetClearanceStatus = Double(bitInterpreter(numBits: 3, swapEndian: false))
+        
+        var tempPressure = bitInterpreter(numBits: 15, swapEndian: false)
+        
+        bit = bitInterpreter(numBits: 1, swapEndian: false)
+        if (bit == 1){
+            pressureRatio = Double(tempPressure)
+        }
+        
+        baroCorrectedPressureAltitude = Double(bitInterpreter(numBits: 16, swapEndian: false))
+        
+        trueHeading = Double(bitInterpreter(numBits: 16, swapEndian: false))
+        
+        verticalVelocity = Double(bitInterpreter(numBits: 16, swapEndian: false))
+        
+        trash = bitInterpreter(numBits: 5, swapEndian: false)
+        
+        bit = bitInterpreter(numBits: 1, swapEndian: false)
+        if(bit == 1){
+            landingGearHandleUp = true
+        }
+        trash = bitInterpreter(numBits: 2, swapEndian: false)
+        trash = bitInterpreter(numBits: 8, swapEndian: false)
+        
+        trash = bitInterpreter(numBits: 8, swapEndian: false)
+        
+        bit = bitInterpreter(numBits: 1, swapEndian: false)
+        if(bit == 1){
+            manualTFConnect = true
+        }
+        
+        bit = bitInterpreter(numBits: 1, swapEndian: false)
+        if(bit == 1){
+            autoTFConnect = true
+        }
+        
+        trash = bitInterpreter(numBits: 6, swapEndian: false)
+        
+        bit = bitInterpreter(numBits: 1, swapEndian: false)
+        if(bit == 1){
+            tfBitInhibited = true
+        }
+        
+        trash = bitInterpreter(numBits: 2, swapEndian: false)
+        
+        bit = bitInterpreter(numBits: 1, swapEndian: false)
+        if(bit == 1){
+            modeAFlyUp = true
+        }
+        
+        bit = bitInterpreter(numBits: 1, swapEndian: false)
+        if(bit == 1){
+            modeBFlyUp = true
+        }
+        
+        bit = bitInterpreter(numBits: 1, swapEndian: false)
+        if(bit == 1){
+            lowAltitudeMonitorFailed = true
+        }
+        
+        trash = bitInterpreter(numBits: 3, swapEndian: false)
+        
+        bit = bitInterpreter(numBits: 1, swapEndian: false)
+        if(bit == 1){
+            afcsDetectedTFFailed = true
+        }
+        
+        bit = bitInterpreter(numBits: 1, swapEndian: false)
+        if(bit == 1){
+            aftControlStickOverrideIndicated = true
+        }
+        
+        trash = bitInterpreter(numBits: 2, swapEndian: false)
+        
+        bit = bitInterpreter(numBits: 1, swapEndian: false)
+        if(bit == 1){
+            highLowAirspeedIndicatorFlashed = true
+        }
+        
+        if (bitsInCommandWord < bitsLeft){
+            var difference = bitsLeft - bitsInCommandWord
+            var junk = bitInterpreter(numBits: difference, swapEndian: false)
+        } else if (bitsInCommandWord > bitsLeft) {
+            print("there are more bits in the command word than were left in the message, something is wrong :(")
+        }
+    } // end of cmd406b function
     
 }
