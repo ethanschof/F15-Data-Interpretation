@@ -7,7 +7,7 @@
 
 import Foundation
 
-class FileInput {
+class FileInput : ObservableObject{
     
     var filename: String = "myChap10.ch10"
     var bytes = Data()
@@ -16,19 +16,19 @@ class FileInput {
     var numPkts = 0
     
     //Front-end display data
-    var currLeftEngineRPM = 0.0
-    var currRightEngineRPM = 0.0
+    @Published var currLeftEngineRPM = 0.0
+    @Published var currRightEngineRPM = 0.0
     
-    var currLeftEngineTemp = 0.0
-    var currRightEngineTemp = 0.0
+    @Published var currLeftEngineTemp = 0.0
+    @Published var currRightEngineTemp = 0.0
     
-    var currLeftFuelFlow = 0.0
-    var currRightFuelFlow = 0.0
+    @Published var currLeftFuelFlow = 0.0
+    @Published var currRightFuelFlow = 0.0
     
-    var currLeftOilPSI = 0.0
-    var currRightOilPSI = 0.0
+    @Published var currLeftOilPSI = 0.0
+    @Published var currRightOilPSI = 0.0
     
-    var currFuelLevel = 0.0
+    @Published var currFuelLevel = 0.0
     
     // 4035 cmd wrd attributes
     var trueAirspeed = 0.0

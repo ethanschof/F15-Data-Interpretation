@@ -22,6 +22,7 @@
 		D845FC732979AB3C00C8FE7F /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		D845FC752979AB3C00C8FE7F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D845FC782979AB3C00C8FE7F /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		D87D8F6129B119E100ACFB10 /* F15-Data-Interpretation-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "F15-Data-Interpretation-Info.plist"; sourceTree = SOURCE_ROOT; };
 		D8EBAFC8297EF4A600EE26A2 /* Packet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Packet.swift; sourceTree = "<group>"; };
 		D8EBAFCA297EF63600EE26A2 /* fileInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = fileInput.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -57,6 +58,7 @@
 		D845FC702979AB3C00C8FE7F /* F15 Data Interpretation */ = {
 			isa = PBXGroup;
 			children = (
+				D87D8F6129B119E100ACFB10 /* F15-Data-Interpretation-Info.plist */,
 				D845FC712979AB3C00C8FE7F /* F15_Data_InterpretationApp.swift */,
 				D845FC732979AB3C00C8FE7F /* ContentView.swift */,
 				D8EBAFC8297EF4A600EE26A2 /* Packet.swift */,
@@ -285,7 +287,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"F15 Data Interpretation/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_FILE = "F15-Data-Interpretation-Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -313,7 +315,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"F15 Data Interpretation/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_FILE = "F15-Data-Interpretation-Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
