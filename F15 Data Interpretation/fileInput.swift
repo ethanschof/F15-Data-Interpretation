@@ -93,6 +93,60 @@ class FileInput : ObservableObject{
     var aftControlStickOverrideIndicated = false
     var highLowAirspeedIndicatorFlashed = false
     
+    // 40D3 cmd wrd attributes
+    
+    var ipeEngineInstalled = true
+    var cftsInstalled = true
+    var tewsIDnotStation5 = false
+    var invalidArmamentAGcountNoID = false
+    var agCountGreaterThan1 = false
+    var invalidCFTS = false
+    var pacsCommunicationInvalid = false
+    var excessFuel = false
+    
+    var aircraftGrossWeight = 0.0
+    var leftCFTfilteredFuelWeight = 0.0
+    var rightCFTfilteredFuelWeight = 0.0
+    var totalFilteredFuelWeight = 0.0
+    
+    var yearTensDigit = 0
+    var yearOnesDigit = 0
+    var monthTensDigit = 0
+    var monthOnesDigit = 0
+    var dayTensDigit = 0
+    var dayOnesDigit = 0
+    
+    var missionCodeDigit1 = 0
+    var missionCodeDigit7 = 0
+    
+    var acNumberDigit1 = 0
+    var acNumberDigit3 = 0
+    var acNumberDigit2 = 0
+    var acNumberDigit4 = 0
+    var acNumberDigit5 = 0
+    var acNumberDigit6 = 0
+    
+    var wingNumberDigit1 = 0
+    var wingNumberDigit3 = 0
+    var wingNumberDigit2 = 0
+    var wingNumberDigit4 = 0
+    
+    var sfdrIBITControl = true
+    var station2TotalWeight = 0.0
+    var station8TotalWeight = 0.0
+    
+    
+    // 40E8 cmd wrd attributes
+    
+    var gcwsStatusDiscretes = 0.0
+    var gcwsValidityDiscretes = 0.0
+    var gcwsDataReasonableDiscretes = 0.0
+    var gcwsHD = 0.0
+    var gcwsHM = 0.0
+    var gcwsHT = 0.0
+    var gcwsHDB = 0.0
+    var gcwsNZmax = 0.0
+    
     
     
     //reads in file into byte array
@@ -337,9 +391,11 @@ class FileInput : ObservableObject{
             case 16595:
                 // command word 0x40D3
                 print("CMD 16595")
+                cmd40D3(bitsLeft: Int(bitsLeftinMsg))
             case 16616:
                 // command word 0x40E8
                 print("CMD 16616")
+                cmd40E8(bitsLeft: Int(bitsLeftinMsg))
 
             default:
                 print("ERROR: Unknown CMD Word")
@@ -624,5 +680,173 @@ class FileInput : ObservableObject{
             print("there are more bits in the command word than were left in the message, something is wrong :(")
         }
     } // end of cmd406b function
+    
+    func cmd40D3(bitsLeft: Int){
+        var totalWordsInThisCmdWord = 22
+        // multiply by 16 because thats how many bytes there are in this cmd wrd
+        var bitsInCommandWord = totalWordsInThisCmdWord*16
+        
+        var bit = bitInterpreter(numBits: 1, swapEndian: false)
+        
+        if (bit == 1){
+            ipeEngineInstalled = true
+        } else {
+            ipeEngineInstalled = false
+        }
+        
+        var trash = bitInterpreter(numBits: 15, swapEndian: false)
+        
+        bit = bitInterpreter(numBits: 1, swapEndian: false)
+        
+        if (bit == 1){
+            cftsInstalled = true
+        } else {
+            cftsInstalled = false
+        }
+        
+        trash = bitInterpreter(numBits: 15, swapEndian: false)
+        
+        trash = bitInterpreter(numBits: 10, swapEndian: false)
+        
+        bit = bitInterpreter(numBits: 1, swapEndian: false)
+        
+        if (bit == 1){
+            tewsIDnotStation5 = true
+        } else {
+            tewsIDnotStation5 = false
+        }
+        
+        bit = bitInterpreter(numBits: 1, swapEndian: false)
+        
+        if (bit == 1){
+            invalidArmamentAGcountNoID = true
+        } else {
+            invalidArmamentAGcountNoID = false
+        }
+        
+        bit = bitInterpreter(numBits: 1, swapEndian: false)
+        
+        if (bit == 1){
+            agCountGreaterThan1 = true
+        } else {
+            agCountGreaterThan1 = false
+        }
+        
+        bit = bitInterpreter(numBits: 1, swapEndian: false)
+        
+        if (bit == 1){
+            invalidCFTS = true
+        } else {
+            invalidCFTS = false
+        }
+        
+        bit = bitInterpreter(numBits: 1, swapEndian: false)
+        
+        if (bit == 1){
+            pacsCommunicationInvalid = true
+        } else {
+            pacsCommunicationInvalid = false
+        }
+        
+        bit = bitInterpreter(numBits: 1, swapEndian: false)
+        
+        if (bit == 1){
+            excessFuel = true
+        } else {
+            excessFuel = false
+        }
+       
+        
+        aircraftGrossWeight = Double(bitInterpreter(numBits: 16, swapEndian: false))
+        leftCFTfilteredFuelWeight = Double(bitInterpreter(numBits: 16, swapEndian: false))
+        rightCFTfilteredFuelWeight = Double(bitInterpreter(numBits: 16, swapEndian: false))
+        totalFilteredFuelWeight = Double(bitInterpreter(numBits: 16, swapEndian: false))
+       
+        yearTensDigit = Int(bitInterpreter(numBits: 4, swapEndian: false))
+        yearOnesDigit = Int(bitInterpreter(numBits: 4, swapEndian: false))
+        
+        trash = bitInterpreter(numBits: 8, swapEndian: false)
+        
+        monthTensDigit = Int(bitInterpreter(numBits: 4, swapEndian: false))
+        monthOnesDigit = Int(bitInterpreter(numBits: 4, swapEndian: false))
+        
+        trash = bitInterpreter(numBits: 16, swapEndian: false)
+        
+        dayTensDigit = Int(bitInterpreter(numBits: 4, swapEndian: false))
+        dayOnesDigit = Int(bitInterpreter(numBits: 4, swapEndian: false))
+        
+        trash = bitInterpreter(numBits: 8, swapEndian: false)
+       
+        missionCodeDigit1 = Int(bitInterpreter(numBits: 4, swapEndian: false))
+        missionCodeDigit7 = Int(bitInterpreter(numBits: 4, swapEndian: false))
+        
+        trash = bitInterpreter(numBits: 8, swapEndian: false)
+       
+        acNumberDigit1 = Int(bitInterpreter(numBits: 4, swapEndian: false))
+        acNumberDigit3 = Int(bitInterpreter(numBits: 4, swapEndian: false))
+        
+        trash = bitInterpreter(numBits: 8, swapEndian: false)
+        
+        acNumberDigit2 = Int(bitInterpreter(numBits: 4, swapEndian: false))
+        acNumberDigit4 = Int(bitInterpreter(numBits: 4, swapEndian: false))
+        
+        trash = bitInterpreter(numBits: 8, swapEndian: false)
+        
+        acNumberDigit5 = Int(bitInterpreter(numBits: 4, swapEndian: false))
+        acNumberDigit6 = Int(bitInterpreter(numBits: 4, swapEndian: false))
+        
+        trash = bitInterpreter(numBits: 8, swapEndian: false)
+       
+        wingNumberDigit1 = Int(bitInterpreter(numBits: 4, swapEndian: false))
+        wingNumberDigit3 = Int(bitInterpreter(numBits: 4, swapEndian: false))
+        
+        trash = bitInterpreter(numBits: 8, swapEndian: false)
+        
+        wingNumberDigit2 = Int(bitInterpreter(numBits: 4, swapEndian: false))
+        wingNumberDigit4 = Int(bitInterpreter(numBits: 4, swapEndian: false))
+        
+        trash = bitInterpreter(numBits: 8, swapEndian: false)
+        
+        bit = bitInterpreter(numBits: 1, swapEndian: false)
+        if(bit == 1){
+            sfdrIBITControl = true
+        } else {
+            sfdrIBITControl = false
+        }
+        
+        station2TotalWeight = Double(bitInterpreter(numBits: 16, swapEndian: false))
+        station8TotalWeight = Double(bitInterpreter(numBits: 16, swapEndian: false))
+        
+        
+        if (bitsInCommandWord < bitsLeft){
+            var difference = bitsLeft - bitsInCommandWord
+            var junk = bitInterpreter(numBits: difference, swapEndian: false)
+        } else if (bitsInCommandWord > bitsLeft) {
+            print("there are more bits in the command word than were left in the message, something is wrong :(")
+        }
+    } // end of cmd40D3()
+    
+    func cmd40E8(bitsLeft: Int){
+        var totalWordsInThisCmdWord = 8
+        // multiply by 16 because all the words are 16 bits in this cmdwrd
+        var bitsInCommandWord = totalWordsInThisCmdWord*16
+        
+        gcwsStatusDiscretes = Double(bitInterpreter(numBits: 16, swapEndian: false))
+        gcwsValidityDiscretes = Double(bitInterpreter(numBits: 16, swapEndian: false))
+        gcwsDataReasonableDiscretes = Double(bitInterpreter(numBits: 16, swapEndian: false))
+        gcwsHD = Double(bitInterpreter(numBits: 16, swapEndian: false))
+        gcwsHM = Double(bitInterpreter(numBits: 16, swapEndian: false))
+        gcwsHT = Double(bitInterpreter(numBits: 16, swapEndian: false))
+        gcwsHDB = Double(bitInterpreter(numBits: 16, swapEndian: false))
+        gcwsNZmax = Double(bitInterpreter(numBits: 16, swapEndian: false))
+        
+        if (bitsInCommandWord < bitsLeft){
+            var difference = bitsLeft - bitsInCommandWord
+            var junk = bitInterpreter(numBits: difference, swapEndian: false)
+        } else if (bitsInCommandWord > bitsLeft) {
+            print("there are more bits in the command word than were left in the message, something is wrong :(")
+        }
+        
+    } // end of cmd40E8()
     
 }
