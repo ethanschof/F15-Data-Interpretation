@@ -520,32 +520,37 @@ class FileInput : ObservableObject{
                 //command word 0x4035
                 print("CMD 16437")
                 cmd4035(bitsLeft: Int(bitsLeftinMsg))
+                bitsLeftinMsg-=21*16
             case 16469:
                 // command word 0x4055
                 print("CMD 16469")
                 cmd4055(bitsLeft: Int(bitsLeftinMsg))
+                bitsLeftinMsg-=16*16
             case 16491:
                 // command word 0x406B
                 print("CMD 16491")
                 cmd406b(bitsLeft: Int(bitsLeftinMsg))
-                
+                bitsLeftinMsg-=11*16
             case 16528:
                 // command word 0x4090
                 print("CMD 16528")
                 cmd4090(bitsLeft: Int(bitsLeftinMsg))
+                bitsLeftinMsg-=19*16
             case 16560:
                 // command word 0x40B0
                 print("CMD 16560")
                 cmd40B0(bitsLeft: Int(bitsLeftinMsg))
+                bitsLeftinMsg-=16*16
             case 16595:
                 // command word 0x40D3
                 print("CMD 16595")
                 cmd40D3(bitsLeft: Int(bitsLeftinMsg))
+                bitsLeftinMsg-=22*16
             case 16616:
                 // command word 0x40E8
                 print("CMD 16616")
                 cmd40E8(bitsLeft: Int(bitsLeftinMsg))
-
+                bitsLeftinMsg-=8*16
             default:
                 print("ERROR: Unknown CMD Word")
                 
@@ -1372,7 +1377,204 @@ class FileInput : ObservableObject{
         }
     } // end of cmd4090 function
     
-    func cmd40B0(bitsLeft: Int){}
+    func cmd40B0(bitsLeft: Int){
+        
+        var totalWordsInThisCmdWord = 16
+        // multiply by 16 because all the words are 16 bits in this cmdwrd
+        var bitsInCommandWord = totalWordsInThisCmdWord*16
+        
+        bitInterpreter(numBits: 15, swapEndian: false)
+        
+        var bit = bitInterpreter(numBits: 1, swapEndian: false)
+        if (bit == 1){
+            weightOffWheels = true
+        }else{
+            weightOffWheels = false
+        }
+        
+        bit = bitInterpreter(numBits: 1, swapEndian: false)
+        if (bit == 1){
+            ADCSpikeTrueAOA = true
+        }else{
+            ADCSpikeTrueAOA = false
+        }
+
+        bit = bitInterpreter(numBits: 1, swapEndian: false)
+        if (bit == 1){
+            ADCSpikePressureRatio = true
+        }else{
+            ADCSpikePressureRatio = false
+        }
+         
+        bit = bitInterpreter(numBits: 1, swapEndian: false)
+        if (bit == 1){
+            ADCSpikeMachNum = true
+        }else{
+            ADCSpikeMachNum = false
+        }
+         
+        bit = bitInterpreter(numBits: 1, swapEndian: false)
+        if (bit == 1){
+            ADCSpikeBaroCorrectedPressAlt = true
+        }else{
+            ADCSpikeBaroCorrectedPressAlt = false
+        }
+         
+        bit = bitInterpreter(numBits: 1, swapEndian: false)
+        if (bit == 1){
+            ADCSpikeNormAcceleration = true
+        }else{
+            ADCSpikeNormAcceleration = false
+        }
+         
+        bit = bitInterpreter(numBits: 1, swapEndian: false)
+        if (bit == 1){
+            ADCDataInvalid = true
+        }else{
+            ADCDataInvalid = false
+        }
+         
+        bit = bitInterpreter(numBits: 1, swapEndian: false)
+        if (bit == 1){
+            cumVoiceTimerTimedOut = true
+        }else{
+            cumVoiceTimerTimedOut = false
+        }
+         
+        bit = bitInterpreter(numBits: 1, swapEndian: false)
+        if (bit == 1){
+            MPDPCommInvalid = true
+        }else{
+            MPDPCommInvalid = false
+        }
+         
+        bit = bitInterpreter(numBits: 1, swapEndian: false)
+        if (bit == 1){
+            SGPNotOperative = true
+        }else{
+            SGPNotOperative = false
+        }
+        
+        bit = bitInterpreter(numBits: 1, swapEndian: false)
+        if (bit == 1){
+            GPNotOperative = true
+        }else{
+            GPNotOperative = false
+        }
+         
+        bit = bitInterpreter(numBits: 1, swapEndian: false)
+        if (bit == 1){
+            AFCSCommORDataInvalid = true
+        }else{
+            AFCSCommORDataInvalid = false
+        }
+         
+        bit = bitInterpreter(numBits: 1, swapEndian: false)
+        if (bit == 1){
+            SGPBCommInvalid = true
+        }else{
+            SGPBCommInvalid = false
+        }
+         
+        bit = bitInterpreter(numBits: 1, swapEndian: false)
+        if (bit == 1){
+            CAUFailure = true
+        }else{
+            CAUFailure = false
+        }
+         
+        //spare bits
+        bitInterpreter(numBits: 3, swapEndian: false)
+        bitInterpreter(numBits: 10, swapEndian: false)
+        
+        bit = bitInterpreter(numBits: 1, swapEndian: false)
+        if (bit == 1){
+            solid900Tone = true
+        }else{
+            solid900Tone = false
+        }
+         
+         
+        bit = bitInterpreter(numBits: 1, swapEndian: false)
+        if (bit == 1){
+            AOADoubletTone = true
+        }else{
+            AOADoubletTone = false
+        }
+         
+        bit = bitInterpreter(numBits: 1, swapEndian: false)
+        if (bit == 1){
+            intermittent4Tone = true
+        }else{
+            intermittent4Tone = false
+        }
+         
+        bit = bitInterpreter(numBits: 1, swapEndian: false)
+        if (bit == 1){
+            intermittent10Tone = true
+        }else{
+            intermittent10Tone = false
+        }
+         
+        bit = bitInterpreter(numBits: 1, swapEndian: false)
+        if (bit == 1){
+            overloadWarningSystemVMsg = true
+        }else{
+            overloadWarningSystemVMsg = false
+        }
+         
+        bit = bitInterpreter(numBits: 1, swapEndian: false)
+        if (bit == 1){
+            ASPLatch72 = true
+        }else{
+            ASPLatch72 = false
+        }
+        
+         fwdFuselageWarningRatio = Double(bitInterpreter(numBits: 16, swapEndian: false))
+         wingWarningRatio =  Double(bitInterpreter(numBits: 16, swapEndian: false))
+         lHorizontalTailWarningRatio =  Double(bitInterpreter(numBits: 16, swapEndian: false))
+         rHorizontalTailWarningRatio =  Double(bitInterpreter(numBits: 16, swapEndian: false))
+         pylonWarningRatio =  Double(bitInterpreter(numBits: 16, swapEndian: false))
+         massItemsWarningRatio =  Double(bitInterpreter(numBits: 16, swapEndian: false))
+         CFTWarningRatio =  Double(bitInterpreter(numBits: 16, swapEndian: false))
+         fwdFuselageNZAllowable =  Double(bitInterpreter(numBits: 16, swapEndian: false))
+         wingNZAllowable =  Double(bitInterpreter(numBits: 16, swapEndian: false))
+         pylonNZAllowable =  Double(bitInterpreter(numBits: 16, swapEndian: false))
+         CFTNZAllowable =  Double(bitInterpreter(numBits: 16, swapEndian: false))
+        
+         //time
+        bitInterpreter(numBits: 4, swapEndian: false)
+        
+        // conduct a modified bits to int because of the bits being split across the bytes
+        var value = bitInterpreter(numBits: 4, swapEndian: false)
+        // grab bits 7 and 6
+        var tmp = bitInterpreter(numBits: 2, swapEndian: false)
+            value = value + (tmp & 1) * 2
+            value = value + (tmp & 0)
+        min = Double(value)
+        
+        hours = Double(bitInterpreter(numBits: 6, swapEndian: false))
+        
+        bit = bitInterpreter(numBits: 1, swapEndian: false)
+        if (bit == 1){
+            timeValid = true
+        }else{
+            timeValid = false
+        }
+        
+        bitInterpreter(numBits: 7, swapEndian: false)
+        bitInterpreter(numBits: 10, swapEndian: false)
+        
+        sec = Double(bitInterpreter(numBits: 6, swapEndian: false))
+        
+        
+        if (bitsInCommandWord < bitsLeft){
+            let difference = bitsLeft - bitsInCommandWord
+            bitInterpreter(numBits: difference, swapEndian: false)
+        } else if (bitsInCommandWord > bitsLeft) {
+            print("there are more bits in the command word than were left in the message, something is wrong :(")
+        }
+    }
     
     func cmd40D3(bitsLeft: Int){
         var totalWordsInThisCmdWord = 22
