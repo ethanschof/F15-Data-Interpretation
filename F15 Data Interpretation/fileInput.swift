@@ -53,6 +53,63 @@ class FileInput : ObservableObject{
     var sideslipAngle = 0.0
     var dynamicPressure = 0.0
     
+    // 4055 cmd wrd attributes
+    var leftEngineFuelFlow = 0.0
+    var rightEngineFuelFlow = 0.0
+    var radarAltitude = 0.0
+    var displayTFGCommand = 0.0
+    var AFCSTFGCommandValue = 0.0
+    
+    var radarLowSpeedCaution = false
+    var radarJamWarning = false
+    var radarNoTerrainWarning = false
+    var radarLimitWarning = false
+    var radarDiveAngleWarning = false
+    var radarTurnAccelWarning = false
+    var radarTurnRateWarning = false
+    var radarRollAngleWarning = false
+    var radarRightTurnCaution = false
+    var radarLeftTurnCaution = false
+    var radarSetClearanceWarning = false
+    var radarGLimitWarning = false
+    var radarObstacleWarning = false
+    var radarDataGood = false
+    var afcsGCommandValid = false
+    var displayGCommandValid = false
+    var station8PylonPresent = false
+    var station5PylonPresent = false
+    var station2PylonPresent = false
+    var AGMERPresentStation8 = false
+    var AGMERPresentRC = false
+    var AGMERPresentStation5 = false
+    var AGMERPresentLC = false
+    var AGMERPresentStation2 = false
+    var station8FuelTankPresent = false
+    var station5FuelTankPresent = false
+    var station2FuelTankPresent = false
+    
+    var aaWeaponIDStation7 = 0.0
+    var aaWeaponIDStation6 = 0.0
+    var aaWeaponIDStation4 = 0.0
+    var aaWeaponIDStation3 = 0.0
+    
+    var missileStorePresent7 = false
+    var missileStorePresent6 = false
+    var missileStorePresent4 = false
+    var missileStorePresent3 = false
+    var missileStorePresen8B = false
+    var missileStorePresent8A = false
+    var missileStorePresent2A = false
+    var missileStorePresent2B = false
+    
+    var agWeaponCountStationRC = 0.0
+    var agWeaponCountStationLC = 0.0
+    var agWeaponCountStation8 = 0.0
+    var agWeaponCountStation5 = 0.0
+    var agWeaponCountStation2 = 0.0
+    
+    var MISSING_CODE = 9999999999999.2
+    
     
     // 406B cmd wrd attributes
     var casPitchCaution = false
@@ -92,6 +149,95 @@ class FileInput : ObservableObject{
     var afcsDetectedTFFailed = false
     var aftControlStickOverrideIndicated = false
     var highLowAirspeedIndicatorFlashed = false
+    
+    // 4090 cmd wrd attributes
+    
+    var leftEngineFanTemp = 0.0
+    var leftEngineOilPressure = 0.0
+    var leftEngineNozzlePosition = 0.0
+    var leftEngineCoreSpeed = 0.0
+    var leftEngineFanSpeed = 0.0
+    var leftEngineTotalTemp = 0.0
+    var leftEnginePowerLevelAngle = 0.0
+    var rightEngineFanTemp = 0.0
+    var rightEngineOilPressure = 0.0
+    var rightEngineNozzlePosition = 0.0
+    var rightEngineCoreSpeed = 0.0
+    var rightEngineFanSpeed = 0.0
+    var rightEngineTotalTemp = 0.0
+    var rightEnginePowerLevelAngle = 0.0
+    
+    var validLeftMachNum = 0.0
+    var validLeftDuctFuelFlow = 0.0
+    var validLeftCoreFuelFlow = 0.0
+    var validLeftGasFuelFlow = 0.0
+    var validLeftPowerLeverAngle = 0.0
+    var validLeftRCVVPosition = 0.0
+    var validLeftCIVVPosition = 0.0
+    var validLeftBurnerPressure = 0.0
+    var validLeftDischargePressure = 0.0
+    var validLeftTotalPressure = 0.0
+    var validLeftTotalTemp = 0.0
+    var validLeftFanSpeed = 0.0
+    var validLeftCoreSpeed = 0.0
+    var validLeftNozzlePosition = 0.0
+    var validLeftMainOilPressure = 0.0
+    var validLeftFanTurbineInletTemp = 0.0
+    var validRightMachNum = 0.0
+    var validRightDuctFuelFlow = 0.0
+    var validRightCoreFuelFlow = 0.0
+    var validRightGasFuelFlow = 0.0
+    var validRightPowerLeverAngle = 0.0
+    var validRightRCVVPosition = 0.0
+    var validRightCIVVPosition = 0.0
+    var validRightBurnerPressure = 0.0
+    var validRightDischargePressure = 0.0
+    var validRightTotalPressure = 0.0
+    var validRightTotalTemp = 0.0
+    var validRightFanSpeed = 0.0
+    var validRightCoreSpeed = 0.0
+    var validRightNozzlePosition = 0.0
+    var validRightMainOilPressure = 0.0
+    var validRightFanTurbineInletTemp = 0.0
+    
+    // 40B0 cmd wrd attributes
+    
+    var weightOffWheels = false
+    var ADCSpikeTrueAOA = false
+    var ADCSpikePressureRatio = false
+    var ADCSpikeMachNum = false
+    var ADCSpikeBaroCorrectedPressAlt = false
+    var ADCSpikeNormAcceleration = false
+    var ADCDataInvalid = false
+    var cumVoiceTimerTimedOut = false
+    var MPDPCommInvalid = false
+    var SGPNotOperative = false
+    var GPNotOperative = false
+    var AFCSCommORDataInvalid = false
+    var SGPBCommInvalid = false
+    var CAUFailure = false
+    var solid900Tone = false
+    var AOADoubletTone = false
+    var intermittent4Tone = false
+    var intermittent10Tone = false
+    var overloadWarningSystemVMsg = false
+    var ASPLatch72 = false
+    var fwdFuselageWarningRatio = 0.0
+    var wingWarningRatio = 0.0
+    var lHorizontalTailWarningRatio = 0.0
+    var rHorizontalTailWarningRatio = 0.0
+    var pylonWarningRatio = 0.0
+    var massItemsWarningRatio = 0.0
+    var CFTWarningRatio = 0.0
+    var fwdFuselageNZAllowable = 0.0
+    var wingNZAllowable = 0.0
+    var pylonNZAllowable = 0.0
+    var CFTNZAllowable = 0.0
+    var time = 0.0
+    var timeValid = false
+    var sec = 0.0
+    var min = 0.0
+    var hours = 0.0
     
     // 40D3 cmd wrd attributes
     
@@ -377,6 +523,7 @@ class FileInput : ObservableObject{
             case 16469:
                 // command word 0x4055
                 print("CMD 16469")
+                cmd4055(bitsLeft: Int(bitsLeftinMsg))
             case 16491:
                 // command word 0x406B
                 print("CMD 16491")
@@ -385,9 +532,11 @@ class FileInput : ObservableObject{
             case 16528:
                 // command word 0x4090
                 print("CMD 16528")
+                cmd4090(bitsLeft: Int(bitsLeftinMsg))
             case 16560:
                 // command word 0x40B0
                 print("CMD 16560")
+                cmd40B0(bitsLeft: Int(bitsLeftinMsg))
             case 16595:
                 // command word 0x40D3
                 print("CMD 16595")
@@ -482,6 +631,296 @@ class FileInput : ObservableObject{
         
     }
     
+    func cmd4055(bitsLeft: Int){
+        
+        var totalWordsInThisCmdWord = 16
+        // multiply by 16 because all the words are 16 bits in this cmdwrd
+        var bitsInCommandWord = totalWordsInThisCmdWord*16
+        
+         leftEngineFuelFlow = Double(bitInterpreter(numBits: 16, swapEndian: false))
+         rightEngineFuelFlow = Double(bitInterpreter(numBits: 16, swapEndian: false))
+         radarAltitude = Double(bitInterpreter(numBits: 16, swapEndian: false))
+         displayTFGCommand = Double(bitInterpreter(numBits: 16, swapEndian: false))
+         AFCSTFGCommandValue = Double(bitInterpreter(numBits: 16, swapEndian: false))
+        
+        var bit = bitInterpreter(numBits: 1, swapEndian: false)
+        if (bit == 1){
+            radarLowSpeedCaution = true
+        } else {
+            radarLowSpeedCaution = false
+        }
+        
+        bit = bitInterpreter(numBits: 1, swapEndian: false)
+        if (bit == 1){
+            radarJamWarning = true
+        } else {
+            radarJamWarning = false
+        }
+        
+        bit = bitInterpreter(numBits: 1, swapEndian: false)
+        if (bit == 1){
+            radarNoTerrainWarning = true
+        } else {
+            radarNoTerrainWarning = false
+        }
+        
+        bit = bitInterpreter(numBits: 1, swapEndian: false)
+        if (bit == 1){
+            radarLimitWarning = true
+        } else {
+            radarLimitWarning = false
+        }
+         
+        bit = bitInterpreter(numBits: 1, swapEndian: false)
+        if (bit == 1){
+            radarLimitWarning = true
+        } else {
+            radarLimitWarning = false
+        }
+        
+        bit = bitInterpreter(numBits: 1, swapEndian: false)
+        if (bit == 1){
+            radarDiveAngleWarning = true
+        } else {
+            radarDiveAngleWarning = false
+        }
+
+        bit = bitInterpreter(numBits: 1, swapEndian: false)
+        if (bit == 1){
+            radarTurnAccelWarning = true
+        } else {
+            radarTurnAccelWarning = false
+        }
+        
+        bit = bitInterpreter(numBits: 1, swapEndian: false)
+        if (bit == 1){
+            radarTurnRateWarning = true
+        } else {
+            radarTurnRateWarning = false
+        }
+        
+        bit = bitInterpreter(numBits: 1, swapEndian: false)
+        if (bit == 1){
+            radarRollAngleWarning = true
+        } else {
+            radarRollAngleWarning = false
+        }
+        
+        bit = bitInterpreter(numBits: 1, swapEndian: false)
+        if (bit == 1){
+            radarRightTurnCaution = true
+        } else {
+            radarRightTurnCaution = false
+        }
+        
+        bit = bitInterpreter(numBits: 1, swapEndian: false)
+        if (bit == 1){
+            radarLeftTurnCaution = true
+        } else {
+            radarLeftTurnCaution = false
+        }
+        
+        bit = bitInterpreter(numBits: 1, swapEndian: false)
+        if (bit == 1){
+            radarSetClearanceWarning = true
+        } else {
+            radarSetClearanceWarning = false
+        }
+        
+        bit = bitInterpreter(numBits: 1, swapEndian: false)
+        if (bit == 1){
+            radarGLimitWarning = true
+        } else {
+            radarGLimitWarning = false
+        }
+        
+        bit = bitInterpreter(numBits: 1, swapEndian: false)
+        if (bit == 1){
+            radarObstacleWarning = true
+        } else {
+            radarObstacleWarning = false
+        }
+        
+        bit = bitInterpreter(numBits: 1, swapEndian: false)
+        if (bit == 1){
+            radarDataGood = true
+        } else {
+            radarDataGood = false
+        }
+        
+        bit = bitInterpreter(numBits: 1, swapEndian: false)
+        if (bit == 1){
+            afcsGCommandValid = true
+        } else {
+            afcsGCommandValid = false
+        }
+        
+        bit = bitInterpreter(numBits: 1, swapEndian: false)
+        if (bit == 1){
+            displayGCommandValid = true
+        } else {
+            displayGCommandValid = false
+        }
+        
+        bit = bitInterpreter(numBits: 1, swapEndian: false)
+        if (bit == 1){
+            station8PylonPresent = true
+        } else {
+            station8PylonPresent = false
+        }
+        
+        bit = bitInterpreter(numBits: 1, swapEndian: false)
+        if (bit == 1){
+            station5PylonPresent = true
+        } else {
+            station5PylonPresent = false
+        }
+        
+        bit = bitInterpreter(numBits: 1, swapEndian: false)
+        if (bit == 1){
+            station2PylonPresent = true
+        } else {
+            station2PylonPresent = false
+        }
+        
+        bit = bitInterpreter(numBits: 1, swapEndian: false)
+        if (bit == 1){
+            AGMERPresentStation8 = true
+        } else {
+            AGMERPresentStation8 = false
+        }
+        
+        bit = bitInterpreter(numBits: 1, swapEndian: false)
+        if (bit == 1){
+            AGMERPresentRC = true
+        } else {
+            AGMERPresentRC = false
+        }
+        
+        bit = bitInterpreter(numBits: 1, swapEndian: false)
+        if (bit == 1){
+            AGMERPresentStation5 = true
+        } else {
+            AGMERPresentStation5 = false
+        }
+        
+        bit = bitInterpreter(numBits: 1, swapEndian: false)
+        if (bit == 1){
+            AGMERPresentLC = true
+        } else {
+            AGMERPresentLC = false
+        }
+        
+        bit = bitInterpreter(numBits: 1, swapEndian: false)
+        if (bit == 1){
+            AGMERPresentStation2 = true
+        } else {
+            AGMERPresentStation2 = false
+        }
+        
+        bit = bitInterpreter(numBits: 1, swapEndian: false)
+        if (bit == 1){
+            station8FuelTankPresent = true
+        } else {
+            station8FuelTankPresent = false
+        }
+        
+        bit = bitInterpreter(numBits: 1, swapEndian: false)
+        if (bit == 1){
+            station5FuelTankPresent = true
+        } else {
+            station5FuelTankPresent = false
+        }
+        
+        bit = bitInterpreter(numBits: 1, swapEndian: false)
+        if (bit == 1){
+            station2FuelTankPresent = true
+        } else {
+            station2FuelTankPresent = false
+        }
+        
+         bitInterpreter(numBits: 3, swapEndian: false)
+        
+         aaWeaponIDStation7 = Double(bitInterpreter(numBits: 2, swapEndian: false))
+         aaWeaponIDStation6 = Double(bitInterpreter(numBits: 2, swapEndian: false))
+         aaWeaponIDStation4 = Double(bitInterpreter(numBits: 2, swapEndian: false))
+         aaWeaponIDStation3 = Double(bitInterpreter(numBits: 2, swapEndian: false))
+        
+        bitInterpreter(numBits: 2, swapEndian: false)
+        
+        bit = bitInterpreter(numBits: 1, swapEndian: false)
+        if (bit == 1){
+            missileStorePresent7 = true
+        } else {
+            missileStorePresent7 = false
+        }
+        
+        bit = bitInterpreter(numBits: 1, swapEndian: false)
+        if (bit == 1){
+            missileStorePresent6 = true
+        } else {
+            missileStorePresent6 = false
+        }
+        
+        bit = bitInterpreter(numBits: 1, swapEndian: false)
+        if (bit == 1){
+            missileStorePresent4 = true
+        } else {
+            missileStorePresent4 = false
+        }
+        
+        bit = bitInterpreter(numBits: 1, swapEndian: false)
+        if (bit == 1){
+            missileStorePresent3 = true
+        } else {
+            missileStorePresent3 = false
+        }
+        
+        bit = bitInterpreter(numBits: 1, swapEndian: false)
+        if (bit == 1){
+            missileStorePresen8B = true
+        } else {
+            missileStorePresen8B = false
+        }
+        
+        bit = bitInterpreter(numBits: 1, swapEndian: false)
+        if (bit == 1){
+            missileStorePresent8A = true
+        } else {
+            missileStorePresent8A = false
+        }
+        
+        bit = bitInterpreter(numBits: 1, swapEndian: false)
+        if (bit == 1){
+            missileStorePresent2A = true
+        } else {
+            missileStorePresent2A = false
+        }
+        
+        bit = bitInterpreter(numBits: 1, swapEndian: false)
+        if (bit == 1){
+            missileStorePresent2B = true
+        } else {
+            missileStorePresent2B = false
+        }
+        
+         agWeaponCountStationRC = Double(bitInterpreter(numBits: 16, swapEndian: false))
+         agWeaponCountStationLC = Double(bitInterpreter(numBits: 16, swapEndian: false))
+         agWeaponCountStation8 = Double(bitInterpreter(numBits: 16, swapEndian: false))
+         agWeaponCountStation5 = Double(bitInterpreter(numBits: 16, swapEndian: false))
+         agWeaponCountStation2 = Double(bitInterpreter(numBits: 16, swapEndian: false))
+        
+        
+        
+        
+        
+        if (bitsInCommandWord < bitsLeft){
+            var difference = bitsLeft - bitsInCommandWord
+            var junk = bitInterpreter(numBits: difference, swapEndian: false)
+        } else if (bitsInCommandWord > bitsLeft) {
+            print("there are more bits in the command word than were left in the message, something is wrong :(")
+        }
+    } // end of cmd4055 function
     
     func cmd406b(bitsLeft: Int){
         var totalWordsInThisCmdWord = 11
@@ -680,6 +1119,10 @@ class FileInput : ObservableObject{
             print("there are more bits in the command word than were left in the message, something is wrong :(")
         }
     } // end of cmd406b function
+    
+    func cmd4090(bitsLeft: Int){}
+    
+    func cmd40B0(bitsLeft: Int){}
     
     func cmd40D3(bitsLeft: Int){
         var totalWordsInThisCmdWord = 22
