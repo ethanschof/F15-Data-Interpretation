@@ -167,38 +167,38 @@ class FileInput : ObservableObject{
     var rightEngineTotalTemp = 0.0
     var rightEnginePowerLevelAngle = 0.0
     
-    var validLeftMachNum = 0.0
-    var validLeftDuctFuelFlow = 0.0
-    var validLeftCoreFuelFlow = 0.0
-    var validLeftGasFuelFlow = 0.0
-    var validLeftPowerLeverAngle = 0.0
-    var validLeftRCVVPosition = 0.0
-    var validLeftCIVVPosition = 0.0
-    var validLeftBurnerPressure = 0.0
-    var validLeftDischargePressure = 0.0
-    var validLeftTotalPressure = 0.0
-    var validLeftTotalTemp = 0.0
-    var validLeftFanSpeed = 0.0
-    var validLeftCoreSpeed = 0.0
-    var validLeftNozzlePosition = 0.0
-    var validLeftMainOilPressure = 0.0
-    var validLeftFanTurbineInletTemp = 0.0
-    var validRightMachNum = 0.0
-    var validRightDuctFuelFlow = 0.0
-    var validRightCoreFuelFlow = 0.0
-    var validRightGasFuelFlow = 0.0
-    var validRightPowerLeverAngle = 0.0
-    var validRightRCVVPosition = 0.0
-    var validRightCIVVPosition = 0.0
-    var validRightBurnerPressure = 0.0
-    var validRightDischargePressure = 0.0
-    var validRightTotalPressure = 0.0
-    var validRightTotalTemp = 0.0
-    var validRightFanSpeed = 0.0
-    var validRightCoreSpeed = 0.0
-    var validRightNozzlePosition = 0.0
-    var validRightMainOilPressure = 0.0
-    var validRightFanTurbineInletTemp = 0.0
+    var validLeftMachNum = false
+    var validLeftDuctFuelFlow = false
+    var validLeftCoreFuelFlow = false
+    var validLeftGasFuelFlow = false
+    var validLeftPowerLeverAngle = false
+    var validLeftRCVVPosition = false
+    var validLeftCIVVPosition = false
+    var validLeftBurnerPressure = false
+    var validLeftDischargePressure = false
+    var validLeftTotalPressure = false
+    var validLeftTotalTemp = false
+    var validLeftFanSpeed = false
+    var validLeftCoreSpeed = false
+    var validLeftNozzlePosition = false
+    var validLeftMainOilPressure = false
+    var validLeftFanTurbineInletTemp = false
+    var validRightMachNum = false
+    var validRightDuctFuelFlow = false
+    var validRightCoreFuelFlow = false
+    var validRightGasFuelFlow = false
+    var validRightPowerLeverAngle = false
+    var validRightRCVVPosition = false
+    var validRightCIVVPosition = false
+    var validRightBurnerPressure = false
+    var validRightDischargePressure = false
+    var validRightTotalPressure = false
+    var validRightTotalTemp = false
+    var validRightFanSpeed = false
+    var validRightCoreSpeed = false
+    var validRightNozzlePosition = false
+    var validRightMainOilPressure = false
+    var validRightFanTurbineInletTemp = false
     
     // 40B0 cmd wrd attributes
     
@@ -1120,7 +1120,257 @@ class FileInput : ObservableObject{
         }
     } // end of cmd406b function
     
-    func cmd4090(bitsLeft: Int){}
+    func cmd4090(bitsLeft: Int){
+        var totalWordsInThisCmdWord = 19
+        var bitsInCommandWord = totalWordsInThisCmdWord*16
+        
+         leftEngineFanTemp = Double(bitInterpreter(numBits: 16, swapEndian: false))
+         leftEngineOilPressure = Double(bitInterpreter(numBits: 16, swapEndian: false))
+         leftEngineNozzlePosition = Double(bitInterpreter(numBits: 16, swapEndian: false))
+         leftEngineCoreSpeed = Double(bitInterpreter(numBits: 16, swapEndian: false))
+         leftEngineFanSpeed = Double(bitInterpreter(numBits: 16, swapEndian: false))
+         leftEngineTotalTemp = Double(bitInterpreter(numBits: 16, swapEndian: false))
+         leftEnginePowerLevelAngle = Double(bitInterpreter(numBits: 16, swapEndian: false))
+         rightEngineFanTemp = Double(bitInterpreter(numBits: 16, swapEndian: false))
+         rightEngineOilPressure = Double(bitInterpreter(numBits: 16, swapEndian: false))
+         rightEngineNozzlePosition = Double(bitInterpreter(numBits: 16, swapEndian: false))
+         rightEngineCoreSpeed = Double(bitInterpreter(numBits: 16, swapEndian: false))
+         rightEngineFanSpeed = Double(bitInterpreter(numBits: 16, swapEndian: false))
+         rightEngineTotalTemp = Double(bitInterpreter(numBits: 16, swapEndian: false))
+         rightEnginePowerLevelAngle = Double(bitInterpreter(numBits: 16, swapEndian: false))
+        
+        var bit = bitInterpreter(numBits: 1, swapEndian: false)
+        if (bit == 1){
+            validLeftMachNum  = true
+        } else {
+            validLeftMachNum  = false
+        }
+        
+        bit = bitInterpreter(numBits: 1, swapEndian: false)
+        if (bit == 1){
+            validLeftDuctFuelFlow = true
+        } else {
+            validLeftDuctFuelFlow = false
+        }
+        
+        bit = bitInterpreter(numBits: 1, swapEndian: false)
+        if (bit == 1){
+            validLeftCoreFuelFlow  = true
+        } else {
+            validLeftCoreFuelFlow = false
+        }
+
+        bit = bitInterpreter(numBits: 1, swapEndian: false)
+        if (bit == 1){
+            validLeftGasFuelFlow  = true
+        } else {
+            validLeftGasFuelFlow = false
+        }
+        
+        bit = bitInterpreter(numBits: 1, swapEndian: false)
+        if (bit == 1){
+            validLeftPowerLeverAngle = true
+        } else {
+            validLeftPowerLeverAngle = false
+        }
+ 
+        bit = bitInterpreter(numBits: 1, swapEndian: false)
+        if (bit == 1){
+            validLeftRCVVPosition = true
+        } else {
+            validLeftRCVVPosition = false
+        }
+        
+        bit = bitInterpreter(numBits: 1, swapEndian: false)
+        if (bit == 1){
+            validLeftCIVVPosition  = true
+        } else {
+            validLeftCIVVPosition = false
+        }
+        
+        bit = bitInterpreter(numBits: 1, swapEndian: false)
+        if (bit == 1){
+            validLeftBurnerPressure = true
+        } else {
+            validLeftBurnerPressure = false
+        }
+
+        bit = bitInterpreter(numBits: 1, swapEndian: false)
+        if (bit == 1){
+            validLeftDischargePressure = true
+        } else {
+            validLeftDischargePressure = false
+        }
+
+        bit = bitInterpreter(numBits: 1, swapEndian: false)
+        if (bit == 1){
+            validLeftTotalPressure = true
+        } else {
+            validLeftTotalPressure = false
+        }
+     
+        bit = bitInterpreter(numBits: 1, swapEndian: false)
+        if (bit == 1){
+            validLeftTotalTemp = true
+        } else {
+            validLeftTotalTemp = false
+        }
+        
+        bit = bitInterpreter(numBits: 1, swapEndian: false)
+        if (bit == 1){
+            validLeftFanSpeed = true
+        } else {
+            validLeftFanSpeed = false
+        }
+        
+        bit = bitInterpreter(numBits: 1, swapEndian: false)
+        if (bit == 1){
+            validLeftCoreSpeed = true
+        } else {
+            validLeftCoreSpeed = false
+        }
+        
+        bit = bitInterpreter(numBits: 1, swapEndian: false)
+        if (bit == 1){
+            validLeftNozzlePosition = true
+        } else {
+            validLeftNozzlePosition  = false
+        }
+        
+        bit = bitInterpreter(numBits: 1, swapEndian: false)
+        if (bit == 1){
+            validLeftMainOilPressure = true
+        } else {
+            validLeftMainOilPressure = false
+        }
+        
+        bit = bitInterpreter(numBits: 1, swapEndian: false)
+        if (bit == 1){
+            validLeftFanTurbineInletTemp = true
+        } else {
+            validLeftFanTurbineInletTemp = false
+        }
+        
+        bit = bitInterpreter(numBits: 1, swapEndian: false)
+        if (bit == 1){
+            validRightMachNum = true
+        } else {
+            validRightMachNum = false
+        }
+        
+        bit = bitInterpreter(numBits: 1, swapEndian: false)
+        if (bit == 1){
+            validRightDuctFuelFlow = true
+        } else {
+            validRightDuctFuelFlow = false
+        }
+        
+        bit = bitInterpreter(numBits: 1, swapEndian: false)
+        if (bit == 1){
+            validRightCoreFuelFlow = true
+        } else {
+            validRightCoreFuelFlow = false
+        }
+         
+        bit = bitInterpreter(numBits: 1, swapEndian: false)
+        if (bit == 1){
+            validRightGasFuelFlow  = true
+        } else {
+            validRightGasFuelFlow = false
+        }
+        
+        bit = bitInterpreter(numBits: 1, swapEndian: false)
+        if (bit == 1){
+            validRightPowerLeverAngle = true
+        } else {
+            validRightPowerLeverAngle = false
+        }
+         
+        bit = bitInterpreter(numBits: 1, swapEndian: false)
+        if (bit == 1){
+            validRightRCVVPosition = true
+        } else {
+            validRightRCVVPosition = false
+        }
+        
+        bit = bitInterpreter(numBits: 1, swapEndian: false)
+        if (bit == 1){
+            validRightCIVVPosition  = true
+        } else {
+            validRightCIVVPosition = false
+        }
+        
+        bit = bitInterpreter(numBits: 1, swapEndian: false)
+        if (bit == 1){
+            validRightBurnerPressure  = true
+        } else {
+            validRightBurnerPressure = false
+        }
+
+        bit = bitInterpreter(numBits: 1, swapEndian: false)
+        if (bit == 1){
+            validRightDischargePressure  = true
+        } else {
+            validRightDischargePressure = false
+        }
+        
+        bit = bitInterpreter(numBits: 1, swapEndian: false)
+        if (bit == 1){
+            validRightTotalPressure  = true
+        } else {
+            validRightTotalPressure = false
+        }
+        
+        bit = bitInterpreter(numBits: 1, swapEndian: false)
+        if (bit == 1){
+            validRightTotalTemp = true
+        } else {
+            validRightTotalTemp = false
+        }
+       
+        bit = bitInterpreter(numBits: 1, swapEndian: false)
+        if (bit == 1){
+            validRightFanSpeed = true
+        } else {
+            validRightFanSpeed = false
+        }
+        
+        bit = bitInterpreter(numBits: 1, swapEndian: false)
+        if (bit == 1){
+            validRightCoreSpeed = true
+        } else {
+            validRightCoreSpeed = false
+        }
+        
+        bit = bitInterpreter(numBits: 1, swapEndian: false)
+        if (bit == 1){
+            validRightNozzlePosition = true
+        } else {
+            validRightNozzlePosition = false
+        }
+        
+        bit = bitInterpreter(numBits: 1, swapEndian: false)
+        if (bit == 1){
+            validRightMainOilPressure = true
+        } else {
+            validRightMainOilPressure = false
+        }
+        
+        bit = bitInterpreter(numBits: 1, swapEndian: false)
+        if (bit == 1){
+            validRightFanTurbineInletTemp = true
+        } else {
+            validRightFanTurbineInletTemp = false
+        }
+    
+        
+        if (bitsInCommandWord < bitsLeft){
+            var difference = bitsLeft - bitsInCommandWord
+            var junk = bitInterpreter(numBits: difference, swapEndian: false)
+        } else if (bitsInCommandWord > bitsLeft) {
+            print("there are more bits in the command word than were left in the message, something is wrong :(")
+        }
+    } // end of cmd4090 function
     
     func cmd40B0(bitsLeft: Int){}
     
