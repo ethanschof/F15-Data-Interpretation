@@ -936,16 +936,22 @@ class FileInput : ObservableObject{
         var bit = bitInterpreter(numBits: 1, swapEndian: false)
         if (bit == 1){
             casPitchCaution = true
+        } else {
+            casPitchCaution = false
         }
         
         bit = bitInterpreter(numBits: 1, swapEndian: false)
         if (bit == 1){
             casRollCaution = true
+        } else {
+            casRollCaution = false
         }
         
         bit = bitInterpreter(numBits: 1, swapEndian: false)
         if (bit == 1){
             casYawCaution = true
+        } else {
+            casYawCaution = false
         }
         trash = bitInterpreter(numBits: 3, swapEndian: false)
         trash = bitInterpreter(numBits: 4, swapEndian: false)
@@ -953,18 +959,24 @@ class FileInput : ObservableObject{
         bit = bitInterpreter(numBits: 1, swapEndian: false)
         if (bit == 1){
             leftBleedAirCaution = true
+        } else {
+            leftBleedAirCaution = false
         }
         
         bit = bitInterpreter(numBits: 1, swapEndian: false)
         if (bit == 1){
             rightBleedAirCaution = true
             
+        } else {
+            rightBleedAirCaution = false
         }
         trash = bitInterpreter(numBits: 1, swapEndian: false)
         
         bit = bitInterpreter(numBits: 1, swapEndian: false)
         if (bit == 1){
             attitudeCaution = true
+        } else {
+            attitudeCaution = false
         }
         
         
@@ -972,6 +984,8 @@ class FileInput : ObservableObject{
         if (bit == 1){
             pitchRatioCaution = true
             
+        } else {
+            pitchRatioCaution = false
         }
         
         trash = bitInterpreter(numBits: 4, swapEndian: false)
@@ -979,11 +993,15 @@ class FileInput : ObservableObject{
         bit = bitInterpreter(numBits: 1, swapEndian: false)
         if (bit == 1){
             rollRatioCaution = true
+        } else {
+            rollRatioCaution = false
         }
         
         bit = bitInterpreter(numBits: 1, swapEndian: false)
         if (bit == 1){
             emergencyBoostOnCaution = true
+        } else {
+            emergencyBoostOnCaution = false
         }
         
         trash = bitInterpreter(numBits: 5, swapEndian: false)
@@ -991,46 +1009,64 @@ class FileInput : ObservableObject{
         bit = bitInterpreter(numBits: 1, swapEndian: false)
         if (bit == 1){
             leftEngineControllerCaution = true
+        } else {
+            leftEngineControllerCaution = false
         }
         
         bit = bitInterpreter(numBits: 1, swapEndian: false)
         if (bit == 1){
             rightEngineControllerCaution = true
+        } else {
+            rightEngineControllerCaution = false
         }
         
         bit = bitInterpreter(numBits: 1, swapEndian: false)
         if (bit == 1){
             boostSystemMalfunctionCaution = true
+        } else {
+            boostSystemMalfunctionCaution = false
         }
         
         bit = bitInterpreter(numBits: 1, swapEndian: false)
         if (bit == 1){
             hydraulicPressureUTILACaution = true
+        } else {
+            hydraulicPressureUTILACaution = false
         }
         
         bit = bitInterpreter(numBits: 1, swapEndian: false)
         if (bit == 1){
             hydraulicPressurePC1ACaution = true
+        } else {
+            hydraulicPressurePC1ACaution = false
         }
         
         bit = bitInterpreter(numBits: 1, swapEndian: false)
         if (bit == 1){
             hydraulicPressurePC2Caution = true
+        } else {
+            hydraulicPressurePC2Caution = false
         }
         
         bit = bitInterpreter(numBits: 1, swapEndian: false)
         if (bit == 1){
             hydraulicPressureUTILBCaution = true
+        } else {
+            hydraulicPressureUTILBCaution = false
         }
         
         bit = bitInterpreter(numBits: 1, swapEndian: false)
         if (bit == 1){
             hydraulicPressurePC1BCaution = true
+        } else {
+            hydraulicPressurePC1BCaution = false
         }
         
         bit = bitInterpreter(numBits: 1, swapEndian: false)
         if (bit == 1){
             hydraulicPressurePC2BCaution = true
+        } else {
+            hydraulicPressurePC2BCaution = false
         }
         
         trash = bitInterpreter(numBits: 1, swapEndian: false)
@@ -1058,6 +1094,8 @@ class FileInput : ObservableObject{
         bit = bitInterpreter(numBits: 1, swapEndian: false)
         if(bit == 1){
             landingGearHandleUp = true
+        } else {
+            landingGearHandleUp = false
         }
         trash = bitInterpreter(numBits: 2, swapEndian: false)
         trash = bitInterpreter(numBits: 8, swapEndian: false)
@@ -1067,11 +1105,15 @@ class FileInput : ObservableObject{
         bit = bitInterpreter(numBits: 1, swapEndian: false)
         if(bit == 1){
             manualTFConnect = true
+        } else {
+            manualTFConnect = false
         }
         
         bit = bitInterpreter(numBits: 1, swapEndian: false)
         if(bit == 1){
             autoTFConnect = true
+        } else {
+            autoTFConnect = false
         }
         
         trash = bitInterpreter(numBits: 6, swapEndian: false)
@@ -1079,6 +1121,8 @@ class FileInput : ObservableObject{
         bit = bitInterpreter(numBits: 1, swapEndian: false)
         if(bit == 1){
             tfBitInhibited = true
+        } else {
+            tfBitInhibited = false
         }
         
         trash = bitInterpreter(numBits: 2, swapEndian: false)
@@ -1086,16 +1130,22 @@ class FileInput : ObservableObject{
         bit = bitInterpreter(numBits: 1, swapEndian: false)
         if(bit == 1){
             modeAFlyUp = true
+        } else {
+            modeAFlyUp = false
         }
         
         bit = bitInterpreter(numBits: 1, swapEndian: false)
         if(bit == 1){
             modeBFlyUp = true
+        } else {
+            modeBFlyUp = false
         }
         
         bit = bitInterpreter(numBits: 1, swapEndian: false)
         if(bit == 1){
             lowAltitudeMonitorFailed = true
+        } else {
+            lowAltitudeMonitorFailed = false
         }
         
         trash = bitInterpreter(numBits: 3, swapEndian: false)
@@ -1103,11 +1153,15 @@ class FileInput : ObservableObject{
         bit = bitInterpreter(numBits: 1, swapEndian: false)
         if(bit == 1){
             afcsDetectedTFFailed = true
+        } else {
+            afcsDetectedTFFailed = false
         }
         
         bit = bitInterpreter(numBits: 1, swapEndian: false)
         if(bit == 1){
             aftControlStickOverrideIndicated = true
+        } else {
+            aftControlStickOverrideIndicated = false
         }
         
         trash = bitInterpreter(numBits: 2, swapEndian: false)
@@ -1115,6 +1169,8 @@ class FileInput : ObservableObject{
         bit = bitInterpreter(numBits: 1, swapEndian: false)
         if(bit == 1){
             highLowAirspeedIndicatorFlashed = true
+        } else {
+            highLowAirspeedIndicatorFlashed = false
         }
         
         if (bitsInCommandWord < bitsLeft){
