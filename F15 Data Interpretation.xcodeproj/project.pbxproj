@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		271A28FF29C8C10B004971AD /* TCPSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271A28FE29C8C10B004971AD /* TCPSocket.swift */; };
 		D820A1582984389100576E1C /* BinarySwift in Frameworks */ = {isa = PBXBuildFile; productRef = D820A1572984389100576E1C /* BinarySwift */; };
 		D845FC722979AB3C00C8FE7F /* F15_Data_InterpretationApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D845FC712979AB3C00C8FE7F /* F15_Data_InterpretationApp.swift */; };
 		D845FC742979AB3C00C8FE7F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D845FC732979AB3C00C8FE7F /* ContentView.swift */; };
@@ -17,6 +18,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		271A28FE29C8C10B004971AD /* TCPSocket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TCPSocket.swift; sourceTree = "<group>"; };
 		D845FC6E2979AB3C00C8FE7F /* F15 Data Interpretation.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "F15 Data Interpretation.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D845FC712979AB3C00C8FE7F /* F15_Data_InterpretationApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = F15_Data_InterpretationApp.swift; sourceTree = "<group>"; };
 		D845FC732979AB3C00C8FE7F /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -62,6 +64,7 @@
 				D845FC712979AB3C00C8FE7F /* F15_Data_InterpretationApp.swift */,
 				D845FC732979AB3C00C8FE7F /* ContentView.swift */,
 				D8EBAFC8297EF4A600EE26A2 /* Packet.swift */,
+				271A28FE29C8C10B004971AD /* TCPSocket.swift */,
 				D8EBAFCA297EF63600EE26A2 /* fileInput.swift */,
 				D845FC752979AB3C00C8FE7F /* Assets.xcassets */,
 				D845FC772979AB3C00C8FE7F /* Preview Content */,
@@ -155,6 +158,7 @@
 			files = (
 				D8EBAFC9297EF4A600EE26A2 /* Packet.swift in Sources */,
 				D845FC742979AB3C00C8FE7F /* ContentView.swift in Sources */,
+				271A28FF29C8C10B004971AD /* TCPSocket.swift in Sources */,
 				D8EBAFCB297EF63600EE26A2 /* fileInput.swift in Sources */,
 				D845FC722979AB3C00C8FE7F /* F15_Data_InterpretationApp.swift in Sources */,
 			);
