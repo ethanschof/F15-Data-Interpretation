@@ -476,7 +476,7 @@ class FileInput : ObservableObject{
             }else{
                 //overloaded version of bitInterpreter that returns an array of UInt8 rather than a UInt64
                 //ignore non-1553 message data
-                var packetData: [UInt8] = sliceByteArray(numBits: Int(pktLength*8 - 192), swapEndian: false)
+                var packetData: [UInt8] = sliceByteArray(numBits: Int((pktLength*8) - 192), swapEndian: false)
             }
             //print values
             print("1553 Packet Number: ", numPkts)
