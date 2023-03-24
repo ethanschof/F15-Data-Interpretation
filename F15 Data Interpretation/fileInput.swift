@@ -473,41 +473,59 @@ class FileInput : ObservableObject{
             
             if(dataType == 25){
                 parseCMDHeader(pktLen: pktLength)
+                //print values
+                print("1553 Packet Number: ", numPkts)
+                print("========================")
+                print("Sync: ", pktSync)
+                print("Channel ID: ", channelID)
+                print("Packet Length: ", pktLength)
+                print("Data Length: ", dataLength)
+                print("Data Type Version: ", dataTypeVer)
+                print("Sequence Number: ", sequenceNum)
+                print("Packet Flags: ", pktFlags)
+                print("Data Type: ", dataType)
+                print("Time Count: ", relativeTimeCount)
+                print("Header Checksum: ", headerChecksum)
+                print("========================\n")
             }else{
                 //overloaded version of bitInterpreter that returns an array of UInt8 rather than a UInt64
                 //ignore non-1553 message data
+                //print values
+                print("Packet Number: ", numPkts)
+                print("========================")
+                print("Sync: ", pktSync)
+                print("Channel ID: ", channelID)
+                print("Packet Length: ", pktLength)
+                print("Data Length: ", dataLength)
+                print("Data Type Version: ", dataTypeVer)
+                print("Sequence Number: ", sequenceNum)
+                print("Packet Flags: ", pktFlags)
+                print("Data Type: ", dataType)
+                print("Time Count: ", relativeTimeCount)
+                print("Header Checksum: ", headerChecksum)
+                print("========================\n")
+                
+                
                 var packetData: [UInt8] = sliceByteArray(numBits: Int((pktLength*8) - 192), swapEndian: false)
+                
             }
-            //print values
-            print("1553 Packet Number: ", numPkts)
-            print("========================")
-            print("Sync: ", pktSync)
-            print("Channel ID: ", channelID)
-            print("Packet Length: ", pktLength)
-            print("Data Length: ", dataLength)
-            print("Data Type Version: ", dataTypeVer)
-            print("Sequence Number: ", sequenceNum)
-            print("Packet Flags: ", pktFlags)
-            print("Data Type: ", dataType)
-            print("Time Count: ", relativeTimeCount)
-            print("Header Checksum: ", headerChecksum)
-            print("========================\n")
+            
         }
     }
     
     func parseCMDHeader(pktLen: UInt64) {
-        var messageCount = bitInterpreter(numBits: 24, swapEndian: false)
+        var messageCount = bitInterpreter(numBits: 24, swapEndian: true)
         
         var chanSpecData = bitInterpreter(numBits: 8, swapEndian: false)
         
         var messagesCompleted = 0
         
-        while(messageCount < messagesCompleted){
+        while(messagesCompleted < messageCount){
             var intraPacketTimeStamp = bitInterpreter(numBits: 64, swapEndian: false)
             var blockStatusWord = bitInterpreter(numBits: 16, swapEndian: true)
             var gapTimesWord = bitInterpreter(numBits: 16, swapEndian: true)
             
-            var msgLen = bitInterpreter(numBits: 16, swapEndian: false)
+            var msgLen = bitInterpreter(numBits: 16, swapEndian: true)
             
             var commandWord = bitInterpreter(numBits: 16, swapEndian: true)
             
@@ -553,8 +571,7 @@ class FileInput : ObservableObject{
                 bitsLeftinMsg-=8*16
             default:
                 print("ERROR: Unknown CMD Word")
-                
-                var msgData = bitInterpreter(numBits: Int(bitsLeftinMsg), swapEndian: false)
+                sliceByteArray(numBits: Int(bitsLeftinMsg), swapEndian: false)
             }
             
             
