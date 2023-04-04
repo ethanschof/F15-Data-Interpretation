@@ -516,7 +516,9 @@ class FileInput : ObservableObject{
     func parseCMDHeader(pktLen: UInt64) {
         var messageCount = bitInterpreter(numBits: 24, swapEndian: true)
         
-        var chanSpecData = bitInterpreter(numBits: 8, swapEndian: false)
+        var timeTagBits = bitInterpreter(numBits: 2, swapEndian: false)
+        
+        var chanSpecData = bitInterpreter(numBits: 6, swapEndian: false)
         
         var messagesCompleted = 0
         
@@ -531,7 +533,7 @@ class FileInput : ObservableObject{
             
             var secondWord = bitInterpreter(numBits: 16, swapEndian: false)
             
-            var bitsLeftinMsg = (msgLen*8) - 32
+            var bitsLeftinMsg = (msgLen*8) - 48
             
             switch commandWord {
             case 16437:
