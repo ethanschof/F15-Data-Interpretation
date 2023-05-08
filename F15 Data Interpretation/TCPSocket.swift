@@ -9,7 +9,7 @@
 import Foundation
 import Network
 
-class UDPClient: NSObject {
+class TCPClient: NSObject {
     var connection: NWConnection?
     var queue: DispatchQueue
     var hostString: String
@@ -91,7 +91,7 @@ class UDPClient: NSObject {
         self.portString = portNum
         let host = NWEndpoint.Host(address)
         let port = NWEndpoint.Port(portNum)!
-        self.connection = NWConnection(host: host, port: port, using: .udp)
+        self.connection = NWConnection(host: host, port: port, using: .tcp)
         
         print(self.connection!.parameters.debugDescription)
         self.connection?.stateUpdateHandler = { (newState) in //[weak self] to pass self in as an optional
