@@ -514,6 +514,9 @@ class FileInput : ObservableObject{
                     if numPkts == 340 || numPkts == 2241 || numPkts == 2485{
                         return
                     }
+                    if pktLength*8 < 192{
+                        return
+                    }
                     var packetData: [UInt8] = sliceByteArray(numBits: Int((pktLength*8) - 192), swapEndian: false)
                     
                 } // end of if else for 1553 packet or regular packet
