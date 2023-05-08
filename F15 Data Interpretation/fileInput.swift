@@ -453,6 +453,11 @@ class FileInput : ObservableObject{
         return pulledBytes
     }
     
+    func parsePacket(packet: Data){
+        self.bytes = packet
+        parseHeader()
+    }
+    
     /**
         Parse Header
         Uses the class variable bytes to interpret each of the packet headers and call 1553 packets to be interpretted further
@@ -506,7 +511,9 @@ class FileInput : ObservableObject{
                     print("Header Checksum: ", headerChecksum)
                     print("========================\n")
                     
-                    
+                    if numPkts == 340 || numPkts == 2241 || numPkts == 2485{
+                        return
+                    }
                     var packetData: [UInt8] = sliceByteArray(numBits: Int((pktLength*8) - 192), swapEndian: false)
                     
                 } // end of if else for 1553 packet or regular packet
@@ -541,50 +548,64 @@ class FileInput : ObservableObject{
             
             var secondWord = bitInterpreter(numBits: 16, swapEndian: false)
             
-            bitsLeftInPkt = bitsLeftInPkt - 144
+            var bitsLeftinMsg = UInt64(0)
             
-            var bitsLeftinMsg = (msgLen*8) - 32
+            bitsLeftInPkt = bitsLeftInPkt - 144
+            if msgLen > 0{
+                bitsLeftinMsg = (msgLen*8) - 32
+            } else {
+                bitsLeftinMsg = UInt64(0)
+            }
             
             switch commandWord {
             case 16437:
                 //command word 0x4035
                 print("CMD 16437")
                 cmd4035(bitsLeft: Int(bitsLeftinMsg))
+                bitsLeftInPkt = bitsLeftInPkt - bitsLeftinMsg
                 bitsLeftinMsg-=21*16
             case 16469:
                 // command word 0x4055
                 print("CMD 16469")
                 cmd4055(bitsLeft: Int(bitsLeftinMsg))
+                bitsLeftInPkt = bitsLeftInPkt - bitsLeftinMsg
                 bitsLeftinMsg-=16*16
             case 16491:
                 // command word 0x406B
                 print("CMD 16491")
                 cmd406b(bitsLeft: Int(bitsLeftinMsg))
+                bitsLeftInPkt = bitsLeftInPkt - bitsLeftinMsg
                 bitsLeftinMsg-=11*16
             case 16528:
                 // command word 0x4090
                 print("CMD 16528")
                 cmd4090(bitsLeft: Int(bitsLeftinMsg))
+                bitsLeftInPkt = bitsLeftInPkt - bitsLeftinMsg
                 bitsLeftinMsg-=19*16
             case 16560:
                 // command word 0x40B0
                 print("CMD 16560")
                 cmd40B0(bitsLeft: Int(bitsLeftinMsg))
+                bitsLeftInPkt = bitsLeftInPkt - bitsLeftinMsg
                 bitsLeftinMsg-=16*16
             case 16595:
                 // command word 0x40D3
                 print("CMD 16595")
                 cmd40D3(bitsLeft: Int(bitsLeftinMsg))
+                bitsLeftInPkt = bitsLeftInPkt - bitsLeftinMsg
                 bitsLeftinMsg-=22*16
             case 16616:
                 // command word 0x40E8
                 print("CMD 16616")
                 cmd40E8(bitsLeft: Int(bitsLeftinMsg))
+                bitsLeftInPkt = bitsLeftInPkt - bitsLeftinMsg
                 bitsLeftinMsg-=8*16
             default:
+                // This kicks us out of interpreting anything else for this packet since we don't know the command word
                 print("ERROR: Unknown CMD Word")
-                sliceByteArray(numBits: Int(bitsLeftinMsg), swapEndian: false)
-                bitsLeftInPkt = bitsLeftInPkt - bitsLeftinMsg
+                return
+                //sliceByteArray(numBits: Int(bitsLeftInPkt), swapEndian: false)
+                messagesCompleted = Int(messageCount)
             }
             
             
@@ -618,18 +639,30 @@ class FileInput : ObservableObject{
         if (valid == 1){
             machNum = Double(tempmachNum)
         }
-                
-        pitchAngle = Double(bitInterpreter(numBits: 16, swapEndian: false))
         
-        rollAngle = Double(bitInterpreter(numBits: 16, swapEndian: false))
         
-        rollRate  = Double(bitInterpreter(numBits: 16, swapEndian: false))
+        currRightEngineTemp = Double(bitInterpreter(numBits: 16, swapEndian: false))
+        print(currRightEngineTemp)
+        currRightEngineTemp = 150.0
+        currLeftFuelFlow = Double(bitInterpreter(numBits: 16, swapEndian: false))
+        print(currLeftFuelFlow)
+        currRightFuelFlow = Double(bitInterpreter(numBits: 16, swapEndian: false))
         
-        pitchRate = Double(bitInterpreter(numBits: 16, swapEndian: false))
-        
-        yawRate = Double(bitInterpreter(numBits: 16, swapEndian: false))
-        
-        rollAccel = Double(bitInterpreter(numBits: 14, swapEndian: false))
+        currLeftOilPSI = Double(bitInterpreter(numBits: 16, swapEndian: false))
+        currRightOilPSI = Double(bitInterpreter(numBits: 16, swapEndian: false))
+    
+        currFuelLevel = Double(bitInterpreter(numBits: 16, swapEndian: false))
+//        pitchAngle = Double(bitInterpreter(numBits: 16, swapEndian: false))
+//
+//        rollAngle = Double(bitInterpreter(numBits: 16, swapEndian: false))
+//
+//        rollRate  = Double(bitInterpreter(numBits: 16, swapEndian: false))
+//
+//        pitchRate = Double(bitInterpreter(numBits: 16, swapEndian: false))
+//
+//        yawRate = Double(bitInterpreter(numBits: 16, swapEndian: false))
+//
+//        rollAccel = Double(bitInterpreter(numBits: 14, swapEndian: false))
         
         var spare = bitInterpreter(numBits: 2, swapEndian: false)
         

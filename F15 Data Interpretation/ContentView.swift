@@ -10,6 +10,10 @@ import SwiftUI
 // https://useyourloaf.com/blog/swiftui-gauges/
 
 struct ContentView: View {
+    @StateObject var tcp = TCPClient()
+    
+    
+    
     @StateObject private var f = FileInput()
     func onClick(){
         f.FileInput(name: "myChap10.ch10")
@@ -20,20 +24,20 @@ struct ContentView: View {
         f.parseHeader()
     }
     
-    var maxEngineRPM = 150.0
+    var maxEngineRPM = 150000.0
     var minEngineRPM = 0.0
     
     var minEngineTemp = 0.0
-    var maxEngineTemp = 1200.0
+    var maxEngineTemp = 70000.0
     
     var minFuelFlow = 0.0
     var maxFuelFlow = 60000.0
     
     var minOilPSI = 1.0
-    var maxOilPSI = 100.0
+    var maxOilPSI = 100000.0
     
     var emptyFuel = 0.0
-    var fullFuel = 100.0
+    var fullFuel = 100000.0
     
     
     var body: some View {
@@ -186,13 +190,27 @@ struct ContentView: View {
             }
             .padding(.all)
             
-            Button(action: onClick){
-                Text("Open File")
-            }
+            VStack {
+                        Button("Connect") {
+                            tcp.connect(host: "10.192.78.249", port: 2023)
+                        }
+                        Button("Disconnect") {
+                            tcp.disconnect()
+                        }
+                    }
+                    .onReceive(tcp.$receivedPacket) { packet in
+                        if let packet = packet {
+                            f.parsePacket(packet: packet)
+                        }
+                    }
             
-            Button(action: parseOneHeader){
-                Text("Parse header")
-            }.padding(.all)
+//            Button(action: onClick){
+//                Text("Open File")
+//            }
+//
+//            Button(action: parseOneHeader){
+//                Text("Parse header")
+//            }.padding(.all)
             
         } // End of Overall VStack
     } // End of Body
