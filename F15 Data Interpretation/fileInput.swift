@@ -34,12 +34,12 @@ class FileInput : ObservableObject{
     var trueAirspeed = 0.0
     var aoa = 0.0
     var machNum = 0.0
-    var pitchAngle = 0.0
-    var rollAngle = 0.0
-    var rollRate = 0.0
-    var pitchRate = 0.0
-    var yawRate = 0.0
-    var rollAccel = 0.0
+    @Published var pitchAngle = 0.0
+    @Published var rollAngle = 0.0
+    @Published var rollRate = 0.0
+    @Published var pitchRate = 0.0
+    @Published var yawRate = 0.0
+    @Published var rollAccel = 0.0
     var pitchAccel = 0.0
     var yawAccel = 0.0
     var longitudinalAccel = 0.0
@@ -54,8 +54,8 @@ class FileInput : ObservableObject{
     var dynamicPressure = 0.0
     
     // 4055 cmd wrd attributes
-    var leftEngineFuelFlow = 0.0
-    var rightEngineFuelFlow = 0.0
+    @Published var leftEngineFuelFlow = 0.0
+    @Published var rightEngineFuelFlow = 0.0
     var radarAltitude = 0.0
     var displayTFGCommand = 0.0
     var AFCSTFGCommandValue = 0.0
@@ -153,14 +153,14 @@ class FileInput : ObservableObject{
     // 4090 cmd wrd attributes
     
     var leftEngineFanTemp = 0.0
-    var leftEngineOilPressure = 0.0
+    @Published var leftEngineOilPressure = 0.0
     var leftEngineNozzlePosition = 0.0
     var leftEngineCoreSpeed = 0.0
     var leftEngineFanSpeed = 0.0
     var leftEngineTotalTemp = 0.0
     var leftEnginePowerLevelAngle = 0.0
     var rightEngineFanTemp = 0.0
-    var rightEngineOilPressure = 0.0
+    @Published var rightEngineOilPressure = 0.0
     var rightEngineNozzlePosition = 0.0
     var rightEngineCoreSpeed = 0.0
     var rightEngineFanSpeed = 0.0
@@ -644,28 +644,17 @@ class FileInput : ObservableObject{
         }
         
         
-        currRightEngineTemp = Double(bitInterpreter(numBits: 16, swapEndian: false))
-        print(currRightEngineTemp)
-        currRightEngineTemp = 150.0
-        currLeftFuelFlow = Double(bitInterpreter(numBits: 16, swapEndian: false))
-        print(currLeftFuelFlow)
-        currRightFuelFlow = Double(bitInterpreter(numBits: 16, swapEndian: false))
-        
-        currLeftOilPSI = Double(bitInterpreter(numBits: 16, swapEndian: false))
-        currRightOilPSI = Double(bitInterpreter(numBits: 16, swapEndian: false))
-    
-        currFuelLevel = Double(bitInterpreter(numBits: 16, swapEndian: false))
-//        pitchAngle = Double(bitInterpreter(numBits: 16, swapEndian: false))
-//
-//        rollAngle = Double(bitInterpreter(numBits: 16, swapEndian: false))
-//
-//        rollRate  = Double(bitInterpreter(numBits: 16, swapEndian: false))
-//
-//        pitchRate = Double(bitInterpreter(numBits: 16, swapEndian: false))
-//
-//        yawRate = Double(bitInterpreter(numBits: 16, swapEndian: false))
-//
-//        rollAccel = Double(bitInterpreter(numBits: 14, swapEndian: false))
+        pitchAngle = Double(bitInterpreter(numBits: 16, swapEndian: false))
+
+        rollAngle = Double(bitInterpreter(numBits: 16, swapEndian: false))
+
+        rollRate  = Double(bitInterpreter(numBits: 16, swapEndian: false))
+
+        pitchRate = Double(bitInterpreter(numBits: 16, swapEndian: false))
+
+        yawRate = Double(bitInterpreter(numBits: 16, swapEndian: false))
+
+        rollAccel = Double(bitInterpreter(numBits: 14, swapEndian: false))
         
         var spare = bitInterpreter(numBits: 2, swapEndian: false)
         

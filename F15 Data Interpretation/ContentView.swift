@@ -43,7 +43,7 @@ struct ContentView: View {
     var body: some View {
         VStack {
             
-            Text("Engine Data")
+            Text("F15 Data")
                 .font(.headline)
                 .scaleEffect(3.0)
                 .padding(.all, 60.0)
@@ -55,14 +55,14 @@ struct ContentView: View {
                 // Left engine
                 VStack{
 
-                    Text("Left Engine").fontWeight(.semibold)
+                    Text("Pitch Angle").fontWeight(.semibold)
                         .scaleEffect(1.4)
 
                     // RPM Guage
-                    Gauge(value: f.currLeftEngineRPM, in: minEngineRPM...maxEngineRPM) {
-                      Text("RPM")
+                    Gauge(value: f.pitchAngle, in: minEngineRPM...maxEngineRPM) {
+                      Text("Degs")
                     } currentValueLabel: {
-                        Text(f.currLeftEngineRPM.formatted())
+                        Text(f.pitchAngle.formatted())
                     }
                     .gaugeStyle(.accessoryCircular)
                     .scaleEffect(2)
@@ -70,11 +70,11 @@ struct ContentView: View {
 
 
                     // Engine Temperature Guage
-                    Gauge(value: f.currLeftEngineTemp, in: minEngineTemp...maxEngineTemp) {
-                      Text("Left Engine Temperature").fontWeight(.semibold)
+                    Gauge(value: f.rollAngle, in: minEngineTemp...maxEngineTemp) {
+                      Text("Roll Angle").fontWeight(.semibold)
                             .scaleEffect(1.2)
                     } currentValueLabel: {
-                        Text(f.currLeftEngineTemp.formatted())
+                        Text(f.rollAngle.formatted())
                             .fontWeight(.semibold)
                             .foregroundColor(Color.red)
                     } minimumValueLabel: {
@@ -85,25 +85,25 @@ struct ContentView: View {
                     .padding(.all)
 
 
-                    Text("Fuel Flow")
+                    Text("Left Engine Fuel Flow")
                         .fontWeight(.semibold)
                         .scaleEffect(1.4)
 
-                    Gauge(value: f.currLeftFuelFlow, in: minFuelFlow...maxFuelFlow) {
+                    Gauge(value: f.leftEngineFuelFlow, in: minFuelFlow...maxFuelFlow) {
                       Text("PPH")
                     } currentValueLabel: {
-                        Text(f.currLeftFuelFlow.formatted())
+                        Text(f.leftEngineFuelFlow.formatted())
                     }
                     .gaugeStyle(.accessoryCircular)
                     .scaleEffect(2)
                     .padding(.all, 40.0)
 
                     // Left Oil PSI
-                    Gauge(value: f.currLeftOilPSI, in: minOilPSI...maxOilPSI) {
-                      Text("Right Engine Oil PSI").fontWeight(.semibold)
+                    Gauge(value: f.leftEngineOilPressure, in: minOilPSI...maxOilPSI) {
+                      Text("Left Engine Oil PSI").fontWeight(.semibold)
                             .scaleEffect(1.2)
                     } currentValueLabel: {
-                        Text(f.currLeftOilPSI.formatted())
+                        Text(f.leftEngineOilPressure.formatted())
                             .fontWeight(.semibold)
                             .foregroundColor(Color.red)
                     }
@@ -115,25 +115,25 @@ struct ContentView: View {
                 Spacer()
 
                 VStack{
-                    Text("Right Engine").fontWeight(.semibold)
+                    Text("Yaw Rate").fontWeight(.semibold)
                         .scaleEffect(1.4)
 
                     // RPM Guage
-                    Gauge(value: f.currRightEngineRPM, in: minEngineRPM...maxEngineRPM) {
-                      Text("RPM")
+                    Gauge(value: f.yawRate, in: minEngineRPM...maxEngineRPM) {
+                      Text("Degs")
                     } currentValueLabel: {
-                        Text(f.currRightEngineRPM.formatted())
+                        Text(f.yawRate.formatted())
                     }
                     .gaugeStyle(.accessoryCircular)
                     .scaleEffect(2)
                     .padding(.all, 40.0)
 
                     // Engine Temperature Guage
-                    Gauge(value: f.currRightEngineTemp, in: minEngineTemp...maxEngineTemp) {
-                      Text("Right Engine Temperature").fontWeight(.semibold)
+                    Gauge(value: f.rollAccel, in: minEngineTemp...maxEngineTemp) {
+                      Text("Roll Accelleration").fontWeight(.semibold)
                             .scaleEffect(1.2)
                     } currentValueLabel: {
-                        Text(f.currRightEngineTemp.formatted())
+                        Text(f.rollAccel.formatted())
                             .fontWeight(.semibold)
                             .foregroundColor(Color.red)
                     } minimumValueLabel: {
@@ -147,21 +147,21 @@ struct ContentView: View {
                         .fontWeight(.semibold)
                         .scaleEffect(1.2)
 
-                    Gauge(value: f.currRightFuelFlow, in: minFuelFlow...maxFuelFlow) {
+                    Gauge(value: f.rightEngineFuelFlow, in: minFuelFlow...maxFuelFlow) {
                       Text("PPH")
                     } currentValueLabel: {
-                        Text(f.currRightFuelFlow.formatted())
+                        Text(f.rightEngineFuelFlow.formatted())
                     }
                     .gaugeStyle(.accessoryCircular)
                     .scaleEffect(2)
                     .padding(.all, 40.0)
 
                     // Right Oil PSI
-                    Gauge(value: f.currRightOilPSI, in: minOilPSI...maxOilPSI) {
+                    Gauge(value: f.rightEngineOilPressure, in: minOilPSI...maxOilPSI) {
                       Text("Right Engine Oil PSI").fontWeight(.semibold)
                             .scaleEffect(1.2)
                     } currentValueLabel: {
-                        Text(f.currRightOilPSI.formatted())
+                        Text(f.rightEngineOilPressure.formatted())
                             .fontWeight(.semibold)
                             .foregroundColor(Color.red)
                     }
@@ -174,13 +174,13 @@ struct ContentView: View {
                 Spacer()
             } // End of Engine HStack
             
-            Text("Total Fuel")
+            Text("Total Fuel Weight")
                 .font(.title2)
                 .scaleEffect(1.5)
 
-            Gauge(value: f.currFuelLevel, in: emptyFuel...fullFuel) {
+            Gauge(value: f.totalFilteredFuelWeight, in: emptyFuel...fullFuel) {
             } currentValueLabel: {
-                Text(f.currFuelLevel.formatted())
+                Text(f.totalFilteredFuelWeight.formatted())
                     .fontWeight(.semibold)
                     .foregroundColor(Color.red)
             } minimumValueLabel: {
