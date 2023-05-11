@@ -1,0 +1,112 @@
+unsigned char* readPcapFile(FILE* fp, long* fileSize){
+    //Read Network Access Layer
+    unsigned char* DestNetwork = extractData(fp, 6);
+    printf("%x %x %x %x %x %x\n", DestNetwork[0], DestNetwork[1],DestNetwork[2],DestNetwork[3],DestNetwork[4],DestNetwork[5]);
+    unsigned char* SrcNetwork = extractData(fp, 6);
+    unsigned char* NetType = extractData(fp, 2); //0x0800 - IPv4
+    free(DestNetwork);
+    free(SrcNetwork);
+    free(NetType);
+    printf("NAL Complete\n");
+    //Read Internet Layer
+    unsigned char* VerandSize = extractData(fp, 1);
+    int IntLayLen = ((int)VerandSize[0] & 15)*4; //mask 0000 - 1111
+    printf("%d\t", IntLayLen);
+    unsigned char* diffServField = extractData(fp, 1);
+    unsigned char* totLenStr = extractData(fp, 2); //(Everything but Network Access Layer)
+    int totLen = ((int)totLenStr[0])*256 + totLenStr[1]; //used for non-TCP packets
+    printf("%d\t", totLen);
+    unsigned char* Identification = extractData(fp, 2);
+    unsigned char* IPFlags = extractData(fp, 2);
+    unsigned char* TTL = extractData(fp, 1);
+    unsigned char* TransportTypeStr = extractData(fp, 1);
+    int TransportType = (int)TransportTypeStr[0]; //MUST be 6 => TCP
+    printf("%d\n", TransportType);
+    unsigned char* HeadChecksum = extractData(fp, 2);
+    unsigned char* srcIP = extractData(fp, 4);
+    unsigned char* destIP = extractData(fp, 4);
+    if(IntLayLen != 20){//non-standard packet
+        char* options = extractData(fp, IntLayLen-20);
+        free(options);
+    }
+    free(VerandSize);
+    free(diffServField);
+    free(totLenStr);
+    free(Identification);
+    free(IPFlags);
+    free(TTL);
+    free(TransportTypeStr);
+    free(HeadChecksum);
+    free(srcIP);
+    free(destIP);
+    printf("IL Complete\n");
+    //Read Transport Layer (ignore non-TCP)
+    if(TransportType == 6){
+        //TCP Packet
+        unsigned char* srcPort = extractData(fp, 2);
+        unsigned char* destPort = extractData(fp, 2);
+        unsigned char* synNum = extractData(fp, 4);
+        unsigned char* ackNum = extractData(fp, 4);
+        unsigned char* TCPHeadLenStr = extractData(fp, 1);
+        int TCPHeadLen = (((int)TCPHeadLenStr[0] & 240) >> 4)*4;
+        printf("%d\n", TCPHeadLen);
+        unsigned char* TCPFlags = extractData(fp, 1);
+        unsigned char* window = extractData(fp, 2);
+        unsigned char* TCPChecksum = extractData(fp, 2);
+        unsigned char* urgPtrs = extractData(fp, 2);
+        if(TCPHeadLen != 20){//non-standard packet
+            char* options = extractData(fp, TCPHeadLen-20);
+            free(options);
+        }
+        free(srcPort);
+        free(destPort);
+        free(synNum);
+        free(ackNum);
+        free(TCPHeadLenStr);
+        free(TCPFlags);
+        free(window);
+        free(TCPChecksum);
+        free(urgPtrs);
+        printf("TCP Complete\n");
+        //Read Application Layer
+        return extractData(fp, totLen - IntLayLen - TCPHeadLen); //Data to send
+    }else{
+        unsigned char* nonTCP = extractData(fp, totLen - IntLayLen);
+        free(nonTCP);
+        *fileSize = *fileSize - totLen - 14;
+        return "non-TCP";
+    }
+}
+
+
+
+
+/*printf("Begin pcap replay.\n\n");
+    //send TCP packets from pcap file
+    long bytesLeft = fSize;
+
+    //find first TCP packet
+    while(1){
+        char* a = extractData(fp, 4);
+        if(a[0] == 0x4A && a[1] == 0x00 && a[2] == 0x00 && a[3] == 0x00){
+            free(a);
+            char* b = extractData(fp, 4);
+            free(b);
+            break;
+        }
+        free(a);
+    }
+
+    while(bytesLeft > 0){
+
+        unsigned char* buff = readPcapFile(fp, &bytesLeft);
+        printf("Data Grabbed\n");
+        if(strncmp(buff, "non-TCP", 7) != 0 && strncmp(buff, "Empty Packet", 12) != 0){
+            //Send TCP Data
+            send(sockfd, buff, strlen(buff), 0);
+            system("pause");
+            free(buff);
+        }
+    }
+    printf("pcap replay complete!\n");
+    */
